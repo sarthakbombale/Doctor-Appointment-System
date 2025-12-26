@@ -6,7 +6,6 @@ require('dotenv').config();
 const register = async (req, res) => {
     console.log(req.body)
 
-    // ❌ password was const earlier and reassigned → FIX: use let
     const { name, email, contactNumber, address } = req.body;
     let { password } = req.body;
 
@@ -15,7 +14,6 @@ const register = async (req, res) => {
             where: { email: email }
         })
 
-        // ❌ user-exists logic was unreachable
         if (exisitingUser) {
             return res.status(400).send({ msg: "User already exists", success: false });
         }
@@ -35,7 +33,6 @@ const register = async (req, res) => {
             return res.status(400).send({ msg: "Not registered", success: false });
         }
 
-        // ❌ success was false earlier
         res.status(201).json({ msg: "Register successfully", success: true });
 
     } catch (error) {
@@ -46,7 +43,6 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     console.log(req.body)
 
-    // ❌ re.body typo already fixed
     const { email, password } = req.body;
 
     try {
@@ -79,9 +75,15 @@ const login = async (req, res) => {
 };
 
 const getUserInfo = async (req, res) => {
+    console.log(req.user, "In controller")
     try {
-        // ❌ empty handler earlier → must send response
-        res.status(200).json({ msg: "User info route working" });
+        const loggedUser = await User.findByPk(
+            req.user.id, {
+            attributes: ["id", "name", "email", "address", "role"]
+        }
+        )
+        console.log("-------------------", loggedUser)
+        res.status(200).json({ user: loggedUser, success: true });
     } catch (error) {
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
