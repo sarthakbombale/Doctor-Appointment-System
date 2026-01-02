@@ -45,6 +45,11 @@ const login = async (req, res) => {
 
     const { email, password } = req.body;
 
+    // Validate required fields before database query
+    if (!email || !password) {
+        return res.status(400).send({ msg: "Email and password are required", success: false });
+    }
+
     try {
         const loggedUser = await User.findOne({
             where: { email: email }
@@ -57,8 +62,14 @@ const login = async (req, res) => {
         if (await bcrypt.compare(password, loggedUser.password)) {
             const payload = { id: loggedUser.id, role: loggedUser.role };
 
-            // ❌ SECRET_KEY typo fixed earlier
-            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1d' });
+            const secret = process.env.SECRET_KEY
+            console.log("=== JWT SIGN DEBUG ===")
+            console.log("SECRET_KEY value:", JSON.stringify(secret))
+            console.log("SECRET_KEY length:", secret ? secret.length : "undefined")
+            console.log("Payload:", payload)
+            const token = jwt.sign(payload, secret, { expiresIn: '1d' });
+            console.log("✅ Token created successfully")
+            console.log("Token (first 30 chars):", token.substring(0, 30) + "...")
 
             return res.status(200).send({
                 msg: "Logged in successfully",
@@ -89,5 +100,19 @@ const getUserInfo = async (req, res) => {
     }
 };
 
-// ❌ getUserInfo was NOT exported earlier → caused crash
-module.exports = { register, login, getUserInfo };
+
+const doctorList = async (req, res) => {
+    console.log(req.user, "In controller")
+    try {
+       const doctors = await User.findAll({
+        where:{role:'doctor'},
+        attributes:["id","name"]
+       })
+        res.status(200).json({ doctors: doctors, success: true });
+    } catch (error) {
+        res.status(500).send({ msg: "Server Error", error: error.message });
+    }
+};
+
+
+module.exports = { register, login, getUserInfo,doctorList };

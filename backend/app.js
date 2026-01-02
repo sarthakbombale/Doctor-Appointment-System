@@ -1,9 +1,9 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-
-const { testConnection, syncDB } = require('./config/db');
-const userRoute = require('./routes/userRoutes');
+const { testConnection, syncDB } = require('./config/db.js');
+const userRoute = require('./routes/userRoutes.js');
+const appointmentRoute = require('./routes/appointmentRoute.js')
 
 const app = express();
 const port = process.env.PORT || 7000;
@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api/user', userRoute);
+app.use('/api/appointment',appointmentRoute);
 
 app.get('/', (req, res) => res.send('Hello World'));
 
