@@ -24,7 +24,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="col">
-            <img src={`${user?.imagePath}`} alt={user?.name} />
+            {user?.imagePath ? <img src={user?.imagePath} alt={user?.name} /> : <p>No image available</p>}
           </div>
         </div>
       </div>

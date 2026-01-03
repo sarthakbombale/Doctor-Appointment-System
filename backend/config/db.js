@@ -24,7 +24,7 @@ async function testConnection() {
     }
 }
 
-const syncDB = async (force = false, alter = false) => {
+const syncDB = async (force = false, alter = true) => {
     try {
         await sequelize.sync({ force: alter });
         console.log('✅ All models were synchronized successfully');
