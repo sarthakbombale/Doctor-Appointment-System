@@ -9,3 +9,7 @@ build/
 .idea/
 package-lock.json
 yarn.lock
+
+# Uploaded files
+backend/uploads/*
+!backend/uploads/.gitkeep

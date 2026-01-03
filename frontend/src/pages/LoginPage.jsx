@@ -21,13 +21,17 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Login Data:", formData);
-    const res = await loginUser(formData)
-    if(res.data.success){
-        toast.success(res.data.msg)
-        localStorage.setItem('token6163',res.data.token)
-        navigate('/dashboard')
-    }else{
-        toast.error(res.data.msg)
+    try {
+      const res = await loginUser(formData)
+      if(res.data.success){
+          toast.success(res.data.msg)
+          localStorage.setItem('token6163',res.data.token)
+          navigate('/dashboard')
+      }else{
+          toast.error(res.data.msg)
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.msg || 'Login failed. Please try again.')
     }
   };
 
