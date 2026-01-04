@@ -4,6 +4,7 @@ const cors = require('cors');
 const { testConnection, syncDB } = require('./config/db.js');
 const userRoute = require('./routes/userRoutes.js');
 const appointmentRoute = require('./routes/appointmentRoute.js')
+const doctorRoute = require('./routes/doctorRoute.js');
 const path = require('path');
 
 const app = express();
@@ -15,6 +16,8 @@ app.use(cors());
 app.use('/api/user', userRoute);
 app.use('/api/appointment', appointmentRoute);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+app.use('/api/doc', doctorRoute);
 
 app.get('/', (req, res) => res.send('Hello World'));
 

@@ -23,8 +23,7 @@ async function testConnection() {
         console.log('❌ Error while connecting to database', error);
     }
 }
-
-const syncDB = async (force = false, alter = true) => {
+syncDB = async (force = false, alter = false) => {
     try {
         await sequelize.sync({ force: alter });
         console.log('✅ All models were synchronized successfully');

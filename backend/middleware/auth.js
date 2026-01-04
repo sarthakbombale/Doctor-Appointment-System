@@ -44,4 +44,11 @@ function doctor(req, res, next) {
     return res.status(403).send({ msg: "you are not authorized" })
 }
 
-module.exports = { auth, doctor }
+function admin(req, res, next) {
+    if (req.user && req.user.role === 'Admin') { // ✅ comparison + correct case
+        return next()
+    }
+    return res.status(403).send({ msg: "you are not authorized" })
+}
+
+module.exports = { auth, doctor, admin }
