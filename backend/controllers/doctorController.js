@@ -38,14 +38,19 @@ const docStatus = async(req,res)=>{
         res.status(400).send({msg:"Doctor not found", success:true})
     }else{
          // 2️⃣ Update doctor status
-    getDoctor.status = "Accepted";
+    getDoctor.status = req.body.status;
     await getDoctor.save(); //
-        if(getDoctor){
+        if(getDoctor.status == 'Accepted'){
             await User.update({role:"Doctor"},{where:{id:getDoctor.createdBy}} )
-        }
-         res
+                     res
       .status(200)
       .send({ msg: "doctor applied successfully", success: true });
+        }else{
+          res
+      .status(200)
+      .send({ msg: "doctor applied rejected", success: false });
+        }
+
 
     }
 
