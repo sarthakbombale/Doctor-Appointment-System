@@ -1,0 +1,88 @@
+/* Sidebar wrapper */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 10px;
+}
+
+/* App title */
+.sidebar h5 {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 15px;
+}
+
+/* Nav container */
+.sidebar .nav {
+  gap: 4px;
+}
+
+/* Links */
+.sidebar a {
+  display: block;
+  padding: 10px 14px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Active link */
+.sidebar a.active {
+  background: #ffffff;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Logout */
+.sidebar a.text-danger {
+  color: #ffdddd !important;
+}
+
+.sidebar a.text-danger:hover {
+  background: rgba(255, 0, 0, 0.2);
+  color: #fff !important;
+}
+
+.main-content {
+  margin-left: 240px;
+  padding: 20px;
+}
+
+.sidebar-logout {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  color: #ffdddd;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sidebar-logout:hover {
+  background: rgba(255, 0, 0, 0.2);
+  color: #fff;
+}
+
+
+/* Responsive (optional collapse later) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+}

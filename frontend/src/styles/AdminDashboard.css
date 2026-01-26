@@ -1,0 +1,49 @@
+/* Page wrapper */
+.admin-dashboard {
+  padding: 20px;
+}
+
+/* Title */
+.admin-dashboard h3 {
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* Stat cards */
+.admin-card {
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Gradient variations */
+.bg-users {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.bg-doctors {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+.bg-appointments {
+  background: linear-gradient(135deg, #fa709a, #fee140);
+}
+
+/* Card text */
+.admin-card .card-title {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.admin-card h2 {
+  font-size: 40px;
+  font-weight: 800;
+  margin-top: 10px;
+}
