@@ -1,21 +1,18 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../api/axiosInstance";
 
-// 🔹 Register User
-export const registerUser = (data) => {
-  return axiosInstance.post("/user/register", data);
+
+export const getUserInfo = () => {
+  return axiosInstance.get("/user/getUserInfo");
 };
 
-// Login user 
-export const loginUser = (data) =>{
-    return axiosInstance.post("/user/login",data)
-}
+export const updateUser = (data) => {
+  return axiosInstance.put("/user/updateUser", data);
+};
 
+export const getUserList = () => {
+  return axiosInstance.get("/user/userList");
+};
 
-export const getLoggedUser = () => {
-  return axiosInstance.get("/user/getUserInfo")
-}
-
-
-export const getDoctorList = () =>{
-    return axiosInstance.get("/user/doctorList")
-}
+export const getDoctorList = () => {
+  return axiosInstance.get("/user/doctorList");
+};

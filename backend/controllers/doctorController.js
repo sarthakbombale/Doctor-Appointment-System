@@ -3,10 +3,10 @@ const User = require("../models/userModel.js");
 
 const applyDoctor = async(req,res)=>{
     try{
-        const{Specialist,fees} = req.body
+        const{specialist,fees} = req.body
         const createdBy = req.user.id
         console.log(req.body, createdBy,"********")
-        const newDoc = await Doctor.create({Specialist,fees,createdBy})
+        const newDoc = await Doctor.create({Specialist: specialist, fees, createdBy})
         console.log(newDoc,"&&&&&&&&&&&&&&newDoc")
         if(newDoc){
             res
@@ -38,14 +38,19 @@ const docStatus = async(req,res)=>{
         res.status(400).send({msg:"Doctor not found", success:true})
     }else{
          // 2️⃣ Update doctor status
-    getDoctor.status = "Accepted";
+    getDoctor.status = req.body.status;
     await getDoctor.save(); //
-        if(getDoctor){
+        if(getDoctor.status == 'Accepted'){
             await User.update({role:"Doctor"},{where:{id:getDoctor.createdBy}} )
-        }
-         res
+                     res
       .status(200)
       .send({ msg: "doctor applied successfully", success: true });
+        }else{
+          res
+      .status(200)
+      .send({ msg: "doctor applied rejected", success: false });
+        }
+
 
     }
 
@@ -83,4 +88,23 @@ const deleteDoctor = (req,res)=>{
     res.status(500).send({ msg: "Server Error" });
   }
 }
-module.exports = {applyDoctor,docStatus, getDoctorInfo,updateDoctor,deleteDoctor}
+
+const getDoctorApplications = async(req,res)=>{
+    try{
+        const applications = await Doctor.findAll({
+            where: { status: 'Pending' },
+            include: [
+                { model: User, attributes: ['id', 'name', 'email'] }
+            ]
+        })
+        if(applications){
+            res.status(200).send({ success: true, data: applications });
+        }else{
+            res.status(400).send({msg:"No applications found", success:false})
+        }
+  } catch (error) {
+    res.status(500).send({ msg: "Server Error" });
+  }
+}
+
+module.exports = {applyDoctor,docStatus, getDoctorInfo,updateDoctor,deleteDoctor, getDoctorApplications}

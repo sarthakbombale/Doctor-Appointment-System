@@ -1,4 +1,6 @@
 const Appointment = require('../models/appointmentModel.js');
+const User = require('../models/userModel.js');
+
 
 async function createAppointment(req, res) {
     try {
@@ -46,7 +48,20 @@ async function statusUpdateByDoctor(req, res) {
 
 function updateAppointment(req, res) {
     try {
-        res.status(200).send({ msg: "Appointment status updated  successfully" })
+        const { ID } = req.params;
+        const { dateTime } = req.body;
+        
+        Appointment.update(
+            { dateTime },
+            { where: { id: ID } }
+        ).then(result => {
+            if(result[0] > 0) {
+                return res.status(200).send({ msg: "Appointment updated successfully", success: true });
+            }
+            return res.status(400).send({ msg: "Appointment not found", success: false });
+        }).catch(error => {
+            return res.status(500).send({ msg: "Server Error", success: false });
+        });
     } catch (error) {
         res.status(500).send({ msg: "Server Error" })
     }
@@ -55,7 +70,17 @@ function updateAppointment(req, res) {
 
 function deleteAppointment(req, res) {
     try {
-        res.status(200).send({ msg: "Appointment deleted successfully" })
+        const { ID } = req.params;
+        Appointment.destroy({
+            where: { id: ID }
+        }).then(result => {
+            if(result > 0) {
+                return res.status(200).send({ msg: "Appointment deleted successfully", success: true });
+            }
+            return res.status(400).send({ msg: "Appointment not found", success: false });
+        }).catch(error => {
+            return res.status(500).send({ msg: "Server Error", success: false });
+        });
     } catch (error) {
         res.status(500).send({ msg: "Server Error" })
     }
@@ -65,22 +90,45 @@ async function getAppointmentsByUser(req, res) {
     try {
         const appointments = await Appointment.findAll({
             where: { createdBy: req.user.id },
+            include: [
+                { model: User, as: 'doctor', attributes: ['id', 'name'] }
+            ],
+            order: [['dateTime', 'ASC']]
         });
-        if (appointments.length == 0) {
-            res.status(400).send({ msg: "No appointments yet" });
-        }
-        res.status(200).send({ appointments: appointments, success: true });
+
+        return res.status(200).send({
+            success: true,
+            appointments: appointments,
+            msg: appointments.length ? "Appointments fetched" : "No appointments yet"
+        });
     } catch (error) {
-        res.status(500).send({ msg: "Server Error" });
+        console.error(error);
+        return res.status(500).send({ msg: "Server Error", success: false });
     }
 }
 
 
+
 function showAppointmentsOfDoctor(req, res) {
     try {
-        res.status(200).send({ msg: "Appointment successfully" })
+        const doctorId = req.user.id;
+        Appointment.findAll({
+            where: { doctorId },
+            include: [
+                { model: User, as: 'patient', attributes: ['id', 'name', 'email', 'contactNumber'] }
+            ],
+            order: [['dateTime', 'ASC']]
+        }).then(appointments => {
+            return res.status(200).send({
+                success: true,
+                appointments: appointments,
+                msg: appointments.length ? "Appointments fetched" : "No appointments yet"
+            });
+        }).catch(error => {
+            return res.status(500).send({ msg: "Server Error", success: false });
+        });
     } catch (error) {
-        res.status(500).send({ msg: "Server Error" })
+        return res.status(500).send({ msg: "Server Error", success: false });
     }
 }
 

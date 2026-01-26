@@ -1,0 +1,122 @@
+/* Container */
+/* FULL PAGE CENTERING */
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 20px;
+}
+/* Card */
+.register-card {
+  width: 100%;
+  max-width: 420px; /* ✅ prevents text breaking */
+  padding: 30px 25px;
+  border-radius: 12px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.register-card h3 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 25px;
+  white-space: nowrap; /* ✅ prevents "Accoun t" */
+}
+
+/* Input group with icon */
+.input-group-custom {
+  position: relative;
+}
+
+.input-group-custom svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #777;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.input-group-custom input,
+.input-group-custom select {
+  width: 100%;
+  padding-left: 40px;
+  height: 45px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.input-group-custom input:focus,
+.input-group-custom select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* File input */
+.file-input-custom {
+  position: relative;
+}
+
+.file-input-custom svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.file-input-custom input {
+  width: 100%;
+  padding-left: 40px;
+  height: 45px;
+  border-radius: 8px;
+}
+
+/* Button */
+.register-btn {
+  width: 100%;
+  height: 45px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.register-btn:hover {
+  background: linear-gradient(135deg, #5a6fd6, #6a3fa0);
+  transform: translateY(-1px);
+}
+
+.register-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Login link */
+.register-card p {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.register-card a {
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-card a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .register-card {
+    padding: 25px 20px;
+  }
+}
