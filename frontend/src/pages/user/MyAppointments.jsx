@@ -24,10 +24,14 @@ const MyAppointments = () => {
     try {
       const res = await getAppointmentsByUser();
       if (res.data.success) {
-        setAppointments(res.data.appointments);
+        setAppointments(res.data.appointments || []);
+      } else {
+        setAppointments([]);
       }
-    } catch {
-      toast.error("Failed to fetch appointments");
+    } catch (error) {
+      console.error("Appointment fetch error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.msg || "Failed to fetch appointments");
+      setAppointments([]);
     } finally {
       setLoading(false);
     }
@@ -37,10 +41,14 @@ const MyAppointments = () => {
     try {
       const res = await getDoctorList();
       if (res.data.success) {
-        setDoctors(res.data.doctors);
+        setDoctors(res.data.doctors || []);
+      } else {
+        setDoctors([]);
       }
-    } catch {
-      toast.error("Failed to load doctors");
+    } catch (error) {
+      console.error("Doctor list fetch error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.msg || "Failed to load doctors");
+      setDoctors([]);
     }
   };
 

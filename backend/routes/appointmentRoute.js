@@ -1,6 +1,6 @@
 const express = require('express')
 const appointmentController = require('../controllers/appointmentController')
-const { auth, doctor } = require('../middleware/auth')
+const { auth, doctor,admin } = require('../middleware/auth.js')
 
 const router = express.Router()
 
@@ -17,7 +17,12 @@ router.get('/getAppointmentsByUser', auth, appointmentController.getAppointments
 
 router.get('/showAppointmentsOfDoctor', auth ,doctor, appointmentController.showAppointmentsOfDoctor) 
 
-
+router.get(
+  '/all',
+  auth,
+  admin,
+  appointmentController.getAllAppointments
+);
 
 // get appontments by query 
 

@@ -14,10 +14,11 @@ const UserDashboard = () => {
       try {
         const res = await getUserDashboard();
         if (res.data.success) {
-          setStats(res.data.data);
+          setStats(res.data.data || { totalAppointments: 0 });
         }
       } catch (error) {
         toast.error("Failed to load user dashboard");
+        setStats({ totalAppointments: 0 });
       }
     };
 

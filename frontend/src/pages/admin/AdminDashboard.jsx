@@ -16,10 +16,11 @@ const AdminDashboard = () => {
       try {
         const res = await getAdminDashboard();
         if (res.data.success) {
-          setStats(res.data.data);
+          setStats(res.data.data || { totalUsers: 0, totalDoctors: 0, totalAppointments: 0 });
         }
       } catch {
         toast.error("Failed to load dashboard data");
+        setStats({ totalUsers: 0, totalDoctors: 0, totalAppointments: 0 });
       }
     };
 

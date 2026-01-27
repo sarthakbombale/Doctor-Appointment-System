@@ -15,10 +15,14 @@ const BookAppointment = () => {
     try {
       const res = await getDoctorList();
       if (res.data.success) {
-        setDoctors(res.data.doctors);
+        setDoctors(res.data.doctors || []);
+      } else {
+        setDoctors([]);
       }
     } catch (error) {
-      toast.error("Failed to fetch doctors");
+      console.error("Doctor list fetch error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.msg || "Failed to fetch doctors");
+      setDoctors([]);
     }
   };
 

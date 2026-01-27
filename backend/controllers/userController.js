@@ -123,5 +123,55 @@ const doctorList = async (req, res) => {
     }
 };
 
+const userList = async (req, res) => {
+    console.log(req.user, "In controller")
+    try {
+        const users = await User.findAll({
+            where: { role: 'user' },
+            attributes: ["id", "name", "email", "contactNumber", "address", "imagePath"]
+        })
+        if (users && users.length > 0) {
+            users.forEach(user => {
+                if (user.imagePath) {
+                    user.imagePath = `${BASEURL}/${user.imagePath}`;
+                }
+            });
+        }
+        res.status(200).json({ users: users, success: true });
+    } catch (error) {
+        res.status(500).send({ msg: "Server Error", error: error.message });
+    }
+};
 
-module.exports = { register, login, getUserInfo, doctorList };
+const updateUser = async (req, res) => {
+    try {
+        const { name, email, contactNumber, address } = req.body;
+        const userId = req.user.id;
+        
+        const user = await User.findByPk(userId);
+        
+        if (!user) {
+            return res.status(400).send({ msg: "User not found", success: false });
+        }
+
+        // Update fields if provided
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (contactNumber) user.contactNumber = contactNumber;
+        if (address) user.address = address;
+        if (req.file) user.imagePath = req.file.filename;
+
+        await user.save();
+
+        if (user.imagePath) {
+            user.imagePath = `${BASEURL}/${user.imagePath}`;
+        }
+
+        res.status(200).json({ msg: "User updated successfully", user: user, success: true });
+    } catch (error) {
+        res.status(500).send({ msg: "Server Error", error: error.message });
+    }
+};
+
+
+module.exports = { register, login, getUserInfo, doctorList, userList, updateUser };

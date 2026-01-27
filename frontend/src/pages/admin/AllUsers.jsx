@@ -10,10 +10,13 @@ const AllUsers = () => {
     try {
       const res = await getUserList();
       if (res.data.success) {
-        setUsers(res.data.users);
+        setUsers(res.data.users || []);
+      } else {
+        setUsers([]);
       }
     } catch (error) {
       toast.error("Failed to fetch users");
+      setUsers([]);
     }
   };
 

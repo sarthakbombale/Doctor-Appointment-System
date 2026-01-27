@@ -13,10 +13,14 @@ const MyAppointments = () => {
     try {
       const res = await getAppointmentsOfDoctor();
       if (res.data.success) {
-        setAppointments(res.data.appointments);
+        setAppointments(res.data.appointments || []);
+      } else {
+        setAppointments([]);
       }
     } catch (error) {
-      toast.error("Failed to fetch appointments");
+      console.error("Doctor appointments fetch error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.msg || "Failed to fetch appointments");
+      setAppointments([]);
     }
   };
 

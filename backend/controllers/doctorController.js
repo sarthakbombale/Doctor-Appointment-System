@@ -69,24 +69,90 @@ const getDoctorInfo = (req,res)=>{
   }
 }
 
-const updateDoctor = (req,res)=>{
-    try{
-            res
-      .status(200)
-      .send({ msg: "doctor created successfully", success: true });
-  } catch (error) {
-    res.status(500).send({ msg: "Server Error" });
-  }
+const getAllDoctors = async (req, res) => {
+    try {
+        const doctors = await Doctor.findAll({
+            include: [
+                { model: User, attributes: ['id', 'name', 'email', 'contactNumber', 'imagePath'] }
+            ]
+        });
+
+        if (doctors && doctors.length > 0) {
+            // Flatten the nested user data
+            const doctorsList = doctors.map(doc => ({
+                doctorId: doc.id,
+                specialist: doc.Specialist,
+                fees: doc.fees,
+                status: doc.status,
+                name: doc.User ? doc.User.name : '',
+                email: doc.User ? doc.User.email : '',
+                contactNumber: doc.User ? doc.User.contactNumber : '',
+                imagePath: doc.User ? doc.User.imagePath : ''
+            }));
+            res.status(200).send({ success: true, doctors: doctorsList });
+        } else {
+            res.status(400).send({ msg: "No doctors found", success: false, doctors: [] });
+        }
+    } catch (error) {
+        res.status(500).send({ msg: "Server Error", error: error.message });
+    }
 }
 
-const deleteDoctor = (req,res)=>{
-    try{
-            res
-      .status(200)
-      .send({ msg: "doctor created successfully", success: true });
-  } catch (error) {
-    res.status(500).send({ msg: "Server Error" });
-  }
+const getMyDoctorApplication = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const application = await Doctor.findOne({
+            where: { createdBy: userId }
+        });
+
+        if (application) {
+            res.status(200).send({ success: true, data: application });
+        } else {
+            res.status(400).send({ msg: "No application found", success: false });
+        }
+    } catch (error) {
+        res.status(500).send({ msg: "Server Error", error: error.message });
+    }
+}
+
+const updateDoctor = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { specialist, fees } = req.body;
+
+        const doctor = await Doctor.findByPk(id);
+
+        if (!doctor) {
+            return res.status(400).send({ msg: "Doctor not found", success: false });
+        }
+
+        if (specialist) doctor.Specialist = specialist;
+        if (fees) doctor.fees = fees;
+
+        await doctor.save();
+
+        res.status(200).send({ msg: "Doctor updated successfully", success: true });
+    } catch (error) {
+        res.status(500).send({ msg: "Server Error", error: error.message });
+    }
+}
+
+const deleteDoctor = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const doctor = await Doctor.findByPk(id);
+
+        if (!doctor) {
+            return res.status(400).send({ msg: "Doctor not found", success: false });
+        }
+
+        await doctor.destroy();
+
+        res.status(200).send({ msg: "Doctor deleted successfully", success: true });
+    } catch (error) {
+        res.status(500).send({ msg: "Server Error", error: error.message });
+    }
 }
 
 const getDoctorApplications = async(req,res)=>{
@@ -107,4 +173,4 @@ const getDoctorApplications = async(req,res)=>{
   }
 }
 
-module.exports = {applyDoctor,docStatus, getDoctorInfo,updateDoctor,deleteDoctor, getDoctorApplications}
+module.exports = {applyDoctor, docStatus, getDoctorInfo, getAllDoctors, getMyDoctorApplication, updateDoctor, deleteDoctor, getDoctorApplications}

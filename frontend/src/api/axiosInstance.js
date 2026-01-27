@@ -29,8 +29,16 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     // centralized error handling
+    console.error("API Error:", {
+      status: error.response?.status,
+      message: error.response?.data?.msg || error.message,
+      url: error.config?.url,
+      data: error.response?.data
+    });
+    
     if (error.response?.status === 401) {
-      console.error("Unauthorized");
+      console.error("Unauthorized - Token might be invalid");
+      localStorage.removeItem("token6163");
     }
     return Promise.reject(error);
   }
