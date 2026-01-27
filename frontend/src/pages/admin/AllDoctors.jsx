@@ -10,10 +10,13 @@ const AllDoctors = () => {
     try {
       const res = await getAllDoctorDetails();
       if (res.data.success) {
-        setDoctors(res.data.doctors);
+        setDoctors(res.data.doctors || []);
+      } else {
+        setDoctors([]);
       }
     } catch (error) {
       toast.error("Failed to load doctor details");
+      setDoctors([]);
     }
   };
 

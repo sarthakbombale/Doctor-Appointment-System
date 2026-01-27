@@ -15,10 +15,11 @@ const DoctorDashboard = () => {
       try {
         const res = await getDoctorDashboard();
         if (res.data.success) {
-          setStats(res.data.data);
+          setStats(res.data.data || { totalAppointments: 0, totalPatients: 0 });
         }
       } catch {
         toast.error("Failed to load doctor dashboard");
+        setStats({ totalAppointments: 0, totalPatients: 0 });
       }
     };
 

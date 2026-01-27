@@ -12,10 +12,13 @@ const DoctorApplications = () => {
       const res = await axiosInstance.get("/doc/applications");
 
       if (res.data.success) {
-        setApplications(res.data.data);
+        setApplications(res.data.data || []);
+      } else {
+        setApplications([]);
       }
     } catch (error) {
       toast.error("Failed to fetch doctor applications");
+      setApplications([]);
     }
   };
 

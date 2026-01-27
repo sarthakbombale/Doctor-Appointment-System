@@ -1,7 +1,7 @@
 import axiosInstance from "../api/axiosInstance";
 
 export const createAppointment = (data) => {
-  return axiosInstance.post("/appointment/createAppointment", data);
+  return axiosInstance.post("/appointment/createAppoint", data);
 };
 
 export const updateAppointmentStatusByDoctor = (id, data) => {

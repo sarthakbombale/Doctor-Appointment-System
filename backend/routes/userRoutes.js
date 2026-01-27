@@ -6,8 +6,9 @@ const router = express.Router();
 
 router.post('/register', upload.single('userImage'), UserController.register);
 router.post('/login', UserController.login);
-router.get('/getUserinfo', auth, UserController.getUserInfo)
+router.get('/getUserInfo', auth, UserController.getUserInfo)
+router.get('/userList', auth, UserController.userList)
 router.get('/doctorList', auth, UserController.doctorList)
-// router.put('/uploadUser',auth,upload,UserController.updateUser)
+router.put('/updateUser', auth, upload.single('userImage'), UserController.updateUser)
 
 module.exports = router;
