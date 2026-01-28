@@ -5,8 +5,8 @@ export const applyForDoctor = (data) => {
   return axiosInstance.post("/doc/apply", data);
 };
 
-export const updateDoctorStatus = (doctorId, data) => {
-  return axiosInstance.post(`/doc/docStatus/${doctorId}`, data);
+export const updateDoctorStatus = (doctorId, status) => {
+  return axiosInstance.post(`/doc/docStatus/${doctorId}`, { status });
 };
 
 export const getMyDoctorApplication = () => {
@@ -28,4 +28,6 @@ export const getAllDoctorDetails = () => {
 export const getDoctorApplications = () => {
   return axiosInstance.get("/doc/applications");
 };
+
+
 

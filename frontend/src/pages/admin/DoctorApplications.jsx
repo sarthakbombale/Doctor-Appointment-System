@@ -24,7 +24,7 @@ const DoctorApplications = () => {
 
   const handleStatusUpdate = async (doctorId, status) => {
     try {
-      const res = await updateDoctorStatus(doctorId, { status });
+      const res = await updateDoctorStatus(doctorId, status); // ✅ FIXED
 
       if (res.data.success) {
         toast.success(res.data.msg);
@@ -90,9 +90,7 @@ const DoctorApplications = () => {
                             size="sm"
                             variant="success"
                             className="me-2"
-                            onClick={() =>
-                              handleStatusUpdate(app.id, "Accepted")
-                            }
+                            onClick={() => handleStatusUpdate(app.id, "Accepted")}
                           >
                             Approve
                           </Button>
@@ -100,9 +98,7 @@ const DoctorApplications = () => {
                           <Button
                             size="sm"
                             variant="danger"
-                            onClick={() =>
-                              handleStatusUpdate(app.id, "Rejected")
-                            }
+                            onClick={() => handleStatusUpdate(app.id, "Reject")}
                           >
                             Reject
                           </Button>

@@ -12,3 +12,5 @@ export const getDoctorDashboard = () => {
 export const getUserDashboard = () => {
   return axiosInstance.get("/dashboard/user");
 };
+
+

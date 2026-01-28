@@ -94,7 +94,7 @@ const getUserInfo = async (req, res) => {
     try {
         const loggedUser = await User.findByPk(
             req.user.id, {
-            attributes: ["id", "name", "email", "address", "role", "imagePath"]
+            attributes: ["id", "name", "email", "address", "contactNumber", "gender", "role", "imagePath"]
         }
         )
         if (loggedUser.imagePath) {
@@ -145,33 +145,30 @@ const userList = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { name, email, contactNumber, address } = req.body;
+        const { name, email, contactNumber, address, gender } = req.body;
         const userId = req.user.id;
-        
-        const user = await User.findByPk(userId);
-        
-        if (!user) {
-            return res.status(400).send({ msg: "User not found", success: false });
-        }
 
-        // Update fields if provided
-        if (name) user.name = name;
-        if (email) user.email = email;
-        if (contactNumber) user.contactNumber = contactNumber;
-        if (address) user.address = address;
+        const user = await User.findByPk(userId);
+        if (!user) return res.status(400).send({ msg: "User not found", success: false });
+
+        if (name !== undefined) user.name = name;
+        if (email !== undefined) user.email = email;
+        if (contactNumber !== undefined) user.contactNumber = contactNumber;
+        if (address !== undefined) user.address = address;
+        if (gender !== undefined) user.gender = gender;
         if (req.file) user.imagePath = req.file.filename;
 
         await user.save();
 
-        if (user.imagePath) {
-            user.imagePath = `${BASEURL}/${user.imagePath}`;
-        }
+        if (user.imagePath) user.imagePath = `${BASEURL}/${user.imagePath}`;
 
-        res.status(200).json({ msg: "User updated successfully", user: user, success: true });
+        res.status(200).json({ msg: "User updated successfully", user, success: true });
     } catch (error) {
+        console.error("updateUser ERROR:", error);
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
 };
+
 
 
 module.exports = { register, login, getUserInfo, doctorList, userList, updateUser };
