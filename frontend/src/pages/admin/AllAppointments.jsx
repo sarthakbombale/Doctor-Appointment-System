@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table, Card, Badge } from "react-bootstrap";
 import { toast } from "react-toastify";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../api/axiosInstance.js";
 
 const AllAppointments = () => {
   const [appointments, setAppointments] = useState([]);

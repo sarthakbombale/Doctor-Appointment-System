@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getUserList } from "../../api/userApi";
+import { getUserList } from "../../api/userAPI.js";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);

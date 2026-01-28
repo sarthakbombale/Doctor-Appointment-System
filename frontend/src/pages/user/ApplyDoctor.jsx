@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { applyForDoctor } from "../../api/doctorApi";
+import { applyForDoctor } from "../../api/doctorAPI.js";
 
 const ApplyDoctor = () => {
   const [formData, setFormData] = useState({
