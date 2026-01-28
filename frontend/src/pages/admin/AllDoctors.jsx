@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getAllDoctorDetails } from "../../api/doctorAPI.js";
+import { getAllDoctorDetails } from "../../api/doctorAPI";
 
 const AllDoctors = () => {
   const [doctors, setDoctors] = useState([]);
@@ -10,13 +10,10 @@ const AllDoctors = () => {
     try {
       const res = await getAllDoctorDetails();
       if (res.data.success) {
-        setDoctors(res.data.doctors || []);
-      } else {
-        setDoctors([]);
+        setDoctors(res.data.doctors);
       }
     } catch (error) {
       toast.error("Failed to load doctor details");
-      setDoctors([]);
     }
   };
 
@@ -50,8 +47,7 @@ const AllDoctors = () => {
                     <td>{index + 1}</td>
                     <td>{doc.name}</td>
                     <td>{doc.email}</td>
-                    <td>{doc.contactNumber || "N/A"}</td>
-                    <td>{doc.gender || "N/A"}</td>
+                    <td>{doc.contactNumber}</td>
                     <td>{doc.specialist}</td>
                     <td>₹{doc.fees}</td>
                   </tr>

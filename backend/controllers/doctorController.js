@@ -71,15 +71,27 @@ const getAllDoctors = async (req, res) => {
       ],
     });
 
+    // Flatten each doctor object
+    const formattedDoctors = doctors.map(doc => ({
+      doctorId: doc.id,                // Doctor table id
+      name: doc.User?.name || "N/A",   // From User table
+      email: doc.User?.email || "N/A",
+      contactNumber: doc.User?.contactNumber || "N/A",
+      specialist: doc.Specialist,
+      fees: doc.fees,
+      status: doc.status,
+    }));
+
     res.status(200).send({
       success: true,
-      doctors,
+      doctors: formattedDoctors,
     });
   } catch (error) {
     console.error("getAllDoctors error:", error);
     res.status(500).send({ msg: error.message });
   }
 };
+
 
 /* ================= MY APPLICATION ================= */
 const getMyDoctorApplication = async (req, res) => {
