@@ -77,6 +77,7 @@ const getAllDoctors = async (req, res) => {
       name: doc.User?.name || "N/A",   // From User table
       email: doc.User?.email || "N/A",
       contactNumber: doc.User?.contactNumber || "N/A",
+      gender: doc.User?.gender || "N/A", 
       specialist: doc.Specialist,
       fees: doc.fees,
       status: doc.status,
