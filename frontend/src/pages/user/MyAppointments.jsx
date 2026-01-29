@@ -5,8 +5,8 @@ import {
   getAppointmentsByUser,
   updateAppointment,
   deleteAppointment,
-} from "../../api/appointmentAPI";
-import { getDoctorList } from "../../api/userAPI";
+} from "../../api/appointmentApi.js";
+import { getDoctorList } from "../../api/userApi.js";
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);

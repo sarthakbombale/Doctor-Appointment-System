@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Card, Container, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { loginUser } from "../../api/authApi";
+import { loginUser } from "../../api/authApi.js";
 import { useNavigate, Link } from "react-router-dom";
 import "../../styles/Login.css";
 

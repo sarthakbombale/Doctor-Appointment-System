@@ -1,5 +1,5 @@
 const express = require('express')
-const appointmentController = require('../controllers/appointmentController')
+const appointmentController = require('../controllers/appointmentController.js')
 const { auth, doctor,admin } = require('../middleware/auth.js')
 
 const router = express.Router()

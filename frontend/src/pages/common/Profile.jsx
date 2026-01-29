@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Spinner, Button, Form, Image, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getUserInfo, updateUser } from "../../api/userAPI";
+import { getUserInfo, updateUser } from "../../api/userAPI.js";
 import "../../styles/Profile.css";
 
 const Profile = () => {

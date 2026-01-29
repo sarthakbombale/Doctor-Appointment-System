@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import {
   getAppointmentsOfDoctor,
   updateAppointmentStatusByDoctor,
-} from "../../api/appointmentApi";
+} from "../../api/appointmentApi.js";
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);

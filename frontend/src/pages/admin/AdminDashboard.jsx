@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
-import { getAdminDashboard } from "../../api/dashboardApi";
+import { getAdminDashboard } from "../../api/dashboardApi.js";
 import { toast } from "react-toastify";
 import "../../styles/AdminDashboard.css";
 

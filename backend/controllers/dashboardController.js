@@ -1,5 +1,5 @@
-const User = require("../models/userModel");
-const Appointment = require("../models/appointmentModel");
+const User = require("../models/userModel.js");
+const Appointment = require("../models/appointmentModel.js");
 
 const adminDashboard = async (req, res) => {
   try {

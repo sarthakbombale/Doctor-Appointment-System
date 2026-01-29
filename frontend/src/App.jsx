@@ -1,35 +1,35 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 /* Layout */
-import MainLayout from "./components/layout/MainLayout";
+import MainLayout from "./components/layout/MainLayout.jsx";
 
 /* Guards */
-import AuthGuard from "./guards/AuthGuard";
-import RoleGuard from "./guards/RoleGuard";
+import AuthGuard from "./guards/AuthGuard.jsx";
+import RoleGuard from "./guards/RoleGuard.jsx";
 
 /* Pages */
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Profile from "./pages/common/Profile";
-import NotFound from "./pages/common/NotFound";
+import Login from "./pages/auth/Login.jsx";
+import Register from "./pages/auth/Register.jsx";
+import Profile from "./pages/common/Profile.jsx";
+import NotFound from "./pages/common/NotFound.jsx";
 
 /* Admin */
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AllUsers from "./pages/admin/AllUsers";
-import AllDoctors from "./pages/admin/AllDoctors";
-import DoctorApplications from "./pages/admin/DoctorApplications";
-import AllAppointments from "./pages/admin/AllAppointments";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import AllUsers from "./pages/admin/AllUsers.jsx";
+import AllDoctors from "./pages/admin/AllDoctors.jsx";
+import DoctorApplications from "./pages/admin/DoctorApplications.jsx";
+import AllAppointments from "./pages/admin/AllAppointments.jsx";
 
 /* Doctor */
-import DoctorDashboard from "./pages/doctor/DoctorDashboard";
-import DoctorAppointments from "./pages/doctor/DoctorAppointments";
+import DoctorDashboard from "./pages/doctor/DoctorDashboard.jsx";
+import DoctorAppointments from "./pages/doctor/DoctorAppointments.jsx";
 
 /* User */
-import UserDashboard from "./pages/user/UserDashboard";
-import BookAppointment from "./pages/user/BookAppointment";
-import MyAppointments from "./pages/user/MyAppointments";
-import ApplyDoctor from "./pages/user/ApplyDoctor";
-import DoctorList from "./pages/user/DoctorsList";
+import UserDashboard from "./pages/user/UserDashboard.jsx";
+import BookAppointment from "./pages/user/BookAppointment.jsx";
+import MyAppointments from "./pages/user/MyAppointments.jsx";
+import ApplyDoctor from "./pages/user/ApplyDoctor.jsx";
+import DoctorList from "./pages/user/DoctorsList.jsx";
 
 const App = () => {
   return (
