@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Card, Container, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { registerUser } from "../../api/authApi";
+import { registerUser } from "../../api/authApi.js";
 import { useNavigate, Link } from "react-router-dom";
 import {
   FaUser,

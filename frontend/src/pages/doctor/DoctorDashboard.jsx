@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getDoctorDashboard } from "../../api/dashboardApi";
+import { getDoctorDashboard } from "../../api/dashboardApi.js";
 import "../../styles/DoctorDashboard.css";
 
 const DoctorDashboard = () => {

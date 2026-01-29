@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getDoctorList } from "../../api/userApi";
-import { createAppointment } from "../../api/appointmentApi";
+import { getDoctorList } from "../../api/userApi.js";
+import { createAppointment } from "../../api/appointmentApi.js";
 
 const BookAppointment = () => {
   const [doctors, setDoctors] = useState([]);

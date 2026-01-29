@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Table, Card, Button, Badge } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { updateDoctorStatus } from "../../api/doctorAPI";
-import axiosInstance from "../../api/axiosInstance";
+import { updateDoctorStatus } from "../../api/doctorApi.js"
+import axiosInstance from "../../api/axiosInstance.js";
 
 const DoctorApplications = () => {
   const [applications, setApplications] = useState([]);

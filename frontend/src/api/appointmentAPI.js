@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../api/axiosInstance.js";
 
 export const createAppointment = (data) => {
   return axiosInstance.post("/appointment/createAppoint", data);

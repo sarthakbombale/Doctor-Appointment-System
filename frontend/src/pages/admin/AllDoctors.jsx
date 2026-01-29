@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getAllDoctorDetails } from "../../api/doctorAPI";
+import { getAllDoctorDetails } from "../../api/doctorAPI.js";
 
 const AllDoctors = () => {
   const [doctors, setDoctors] = useState([]);
