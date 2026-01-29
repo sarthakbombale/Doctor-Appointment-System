@@ -13,6 +13,21 @@ Appointment.belongsTo(User, { foreignKey: 'doctorId', as: 'doctor' })
 //Updated By - User
 Appointment.belongsTo(User, { foreignKey: 'updatedBy', as: 'updateByUser' })
 
-//Doctor - User relationship
-User.hasMany(Doctor, { foreignKey: 'createdBy' })
-Doctor.belongsTo(User, { foreignKey: 'createdBy' })
+
+
+// Doctor → belongs to User
+Doctor.belongsTo(User, {
+  foreignKey: "createdBy",
+  as: "user"
+});
+
+// User → has one Doctor profile
+User.hasOne(Doctor, {
+  foreignKey: "createdBy",
+  as: "doctorProfile"
+});
+
+module.exports = {
+  User,
+  Doctor
+};

@@ -10,10 +10,13 @@ const AllDoctors = () => {
     try {
       const res = await getAllDoctorDetails();
       if (res.data.success) {
-        setDoctors(res.data.doctors);
+        setDoctors(res.data.doctors || []);
+      } else {
+        setDoctors([]);
       }
     } catch (error) {
       toast.error("Failed to load doctor details");
+      setDoctors([]);
     }
   };
 
@@ -43,13 +46,14 @@ const AllDoctors = () => {
             <tbody>
               {doctors.length > 0 ? (
                 doctors.map((doc, index) => (
-                  <tr key={doc.doctorId}>
+                  <tr key={doc.doctorId || index}>
                     <td>{index + 1}</td>
                     <td>{doc.name}</td>
                     <td>{doc.email}</td>
-                    <td>{doc.contactNumber}</td>
-                    <td>{doc.specialist}</td>
-                    <td>₹{doc.fees}</td>
+                    <td>{doc.contactNumber || "N/A"}</td>
+                    <td>{doc.gender || "N/A"}</td>
+                    <td>{doc.specialist || "N/A"}</td>
+                    <td>₹{doc.fees || 0}</td>
                   </tr>
                 ))
               ) : (

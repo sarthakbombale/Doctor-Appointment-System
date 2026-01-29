@@ -36,6 +36,10 @@ const User = sequelize.define("User", {
     },
     imagePath: {
         type: DataTypes.STRING
+    },
+    doctorApproved: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     timestamps: true,

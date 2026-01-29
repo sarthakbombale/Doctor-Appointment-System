@@ -75,9 +75,10 @@ const BookAppointment = () => {
                     <option value="">-- Select Doctor --</option>
                     {doctors.map((doc) => (
                       <option key={doc.id} value={doc.id}>
-                        {doc.name}
+                        {doc.user?.name} - {doc.Specialist}
                       </option>
                     ))}
+
                   </Form.Select>
                 </Form.Group>
 
