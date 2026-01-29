@@ -14,5 +14,5 @@ export const getUserList = () => {
 };
 
 export const getDoctorList = () => {
-  return axiosInstance.get("/user/doctorList");
+  return axiosInstance.get("/doc/approved-doctors");
 };

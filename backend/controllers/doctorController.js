@@ -45,7 +45,27 @@ const docStatus = async (req, res) => {
     await doctor.save();
 
     if (status === "Accepted") {
-      await User.update({ role: "Doctor" }, { where: { id: doctor.createdBy } });
+      await User.update(
+        {
+          role: "Doctor",
+          doctorApproved: true
+        },
+        {
+          where: { id: doctor.createdBy }
+        }
+      );
+    }
+
+    if (status === "Reject") {
+      await User.update(
+        {
+          role: "User",
+          doctorApproved: false
+        },
+        {
+          where: { id: doctor.createdBy }
+        }
+      );
     }
 
     res.status(200).send({
@@ -66,18 +86,19 @@ const getAllDoctors = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["id", "name", "email", "contactNumber", "imagePath"],
-        },
-      ],
+          as: "user",
+          attributes: ["id", "name", "email", "contactNumber", "gender", "imagePath"]
+        }
+      ]
     });
 
     // Flatten each doctor object
     const formattedDoctors = doctors.map(doc => ({
       doctorId: doc.id,                // Doctor table id
-      name: doc.User?.name || "N/A",   // From User table
-      email: doc.User?.email || "N/A",
-      contactNumber: doc.User?.contactNumber || "N/A",
-      gender: doc.User?.gender || "N/A", 
+      name: doc.user?.name || "N/A",
+      email: doc.user?.email || "N/A",
+      contactNumber: doc.user?.contactNumber || "N/A",
+      gender: doc.user?.gender || "N/A",
       specialist: doc.Specialist,
       fees: doc.fees,
       status: doc.status,
@@ -178,7 +199,14 @@ const getDoctorApplications = async (req, res) => {
   try {
     const applications = await Doctor.findAll({
       where: { status: "Pending" },
-      include: [{ model: User, attributes: ["id", "name", "email"] }],
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["id", "name", "email"]
+        }
+      ]
+      ,
     });
 
     res.status(200).send({
@@ -191,6 +219,34 @@ const getDoctorApplications = async (req, res) => {
   }
 };
 
+const getApprovedDoctors = async (req, res) => {
+  try {
+    const doctors = await Doctor.findAll({
+      where: { status: "Accepted" },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["id", "name", "email"]
+        }
+      ]
+    });
+
+    res.status(200).json({
+      success: true,
+      doctors
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      msg: "Server Error"
+    });
+  }
+};
+
+
 module.exports = {
   applyDoctor,
   docStatus,
@@ -199,4 +255,5 @@ module.exports = {
   updateDoctor,
   deleteDoctor,
   getDoctorApplications,
+  getApprovedDoctors,
 };
