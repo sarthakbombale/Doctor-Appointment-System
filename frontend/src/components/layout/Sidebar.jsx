@@ -1,13 +1,27 @@
 import { Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import "../../styles/Sidebar.css";
+import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
+
+// Icons
+import {
+  FaUserMd,
+  FaUsers,
+  FaClipboardList,
+  FaCalendarAlt,
+  FaUser,
+  FaSignOutAlt,
+  FaBars,
+} from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
+
 import "../../styles/Sidebar.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token6163");
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
+  const token = localStorage.getItem("token6163");
   let role = null;
 
   if (token) {
@@ -21,41 +35,43 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
-      <h5 className="text-center py-3">Doctor App</h5>
-      <Nav className="flex-column px-3">
+    <aside className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+      {/* HEADER */}
+      <div className="sidebar-header">
+        {!isCollapsed && <h5 className="logo">Doctor App</h5>}
+        <FaBars
+          className="toggle-icon"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        />
+      </div>
+
+      <Nav className="flex-column sidebar-nav">
         {/* ADMIN */}
         {role === "Admin" && (
           <>
-            <NavLink
-              to="/admin/dashboard"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Dashboard
+            <NavLink to="/admin/dashboard">
+              <MdDashboard />
+              {!isCollapsed && <span>Dashboard</span>}
             </NavLink>
-            <NavLink
-              to="/admin/users"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              All Users
+
+            <NavLink to="/admin/users">
+              <FaUsers />
+              {!isCollapsed && <span>All Users</span>}
             </NavLink>
-            <NavLink
-              to="/admin/doctors"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              All Doctors
+
+            <NavLink to="/admin/doctors">
+              <FaUserMd />
+              {!isCollapsed && <span>All Doctors</span>}
             </NavLink>
-            <NavLink
-              to="/admin/doctor-applications"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Doctor Applications
+
+            <NavLink to="/admin/doctor-applications">
+              <FaClipboardList />
+              {!isCollapsed && <span>Doctor Applications</span>}
             </NavLink>
-            <NavLink
-              to="/admin/appointments"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              All Appointments
+
+            <NavLink to="/admin/appointments">
+              <FaCalendarAlt />
+              {!isCollapsed && <span>Appointments</span>}
             </NavLink>
           </>
         )}
@@ -63,17 +79,14 @@ const Sidebar = () => {
         {/* DOCTOR */}
         {role === "Doctor" && (
           <>
-            <NavLink
-              to="/doctor/dashboard"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Dashboard
+            <NavLink to="/doctor/dashboard">
+              <MdDashboard />
+              {!isCollapsed && <span>Dashboard</span>}
             </NavLink>
-            <NavLink
-              to="/doctor/appointments"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              My Appointments
+
+            <NavLink to="/doctor/appointments">
+              <FaCalendarAlt />
+              {!isCollapsed && <span>My Appointments</span>}
             </NavLink>
           </>
         )}
@@ -81,47 +94,40 @@ const Sidebar = () => {
         {/* USER */}
         {role === "User" && (
           <>
-            <NavLink
-              to="/user/dashboard"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Dashboard
+            <NavLink to="/user/dashboard">
+              <MdDashboard />
+              {!isCollapsed && <span>Dashboard</span>}
             </NavLink>
-            {/* <NavLink
-              to="/user/doctors"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Doctors
-            </NavLink> */}
-            <NavLink
-              to="/user/book-appointment"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Book Appointment
+
+            <NavLink to="/user/book-appointment">
+              <FaCalendarAlt />
+              {!isCollapsed && <span>Book Appointment</span>}
             </NavLink>
-            <NavLink
-              to="/user/appointments"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              My Appointments
+
+            <NavLink to="/user/appointments">
+              <FaClipboardList />
+              {!isCollapsed && <span>My Appointments</span>}
             </NavLink>
-            <NavLink
-              to="/user/apply-doctor"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Apply For Doctor
+
+            <NavLink to="/user/apply-doctor">
+              <FaUserMd />
+              {!isCollapsed && <span>Apply For Doctor</span>}
             </NavLink>
           </>
         )}
 
         {/* COMMON */}
-        <NavLink to="/profile">Profile</NavLink>
+        <NavLink to="/profile">
+          <FaUser />
+          {!isCollapsed && <span>Profile</span>}
+        </NavLink>
 
-        <button onClick={logout} className="sidebar-logout">
-          Logout
+        <button className="sidebar-logout" onClick={logout}>
+          <FaSignOutAlt />
+          {!isCollapsed && <span>Logout</span>}
         </button>
       </Nav>
-    </div>
+    </aside>
   );
 };
 
