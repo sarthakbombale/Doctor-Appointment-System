@@ -2,13 +2,26 @@ const User = require('./userModel.js');
 const Appointment = require('./appointmentModel.js')
 const Doctor = require('./doctorModel.js')
 
-//patient appointment
-User.hasMany(Appointment, { foreignKey: 'createdBy' })
-Appointment.belongsTo(User, { foreignKey: 'createdBy', as: 'patient' })
+// Patient appointments
+User.hasMany(Appointment, {
+  foreignKey: 'createdBy',
+  as: 'patientAppointments'
+});
+Appointment.belongsTo(User, {
+  foreignKey: 'createdBy',
+  as: 'patient'
+});
 
-//Doctor appointment
-User.hasMany(Appointment, { foreignKey: 'doctorId' })
-Appointment.belongsTo(User, { foreignKey: 'doctorId', as: 'doctor' })
+// Doctor appointments
+User.hasMany(Appointment, {
+  foreignKey: 'doctorId',
+  as: 'doctorAppointments'
+});
+Appointment.belongsTo(User, {
+  foreignKey: 'doctorId',
+  as: 'doctor'
+});
+
 
 //Updated By - User
 Appointment.belongsTo(User, { foreignKey: 'updatedBy', as: 'updateByUser' })

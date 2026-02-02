@@ -204,8 +204,8 @@ const MyAppointments = () => {
                 onChange={(e) => setDoctorId(e.target.value)}
               >
                 {doctors.map((doc) => (
-                  <option key={doc.id} value={doc.id}>
-                    Dr. {doc.name}
+                  <option key={doc.id} value={doc.user.id}>
+                    Dr. {doc.user.name}
                   </option>
                 ))}
               </Form.Select>

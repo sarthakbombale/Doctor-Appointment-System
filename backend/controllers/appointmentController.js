@@ -6,44 +6,42 @@ const User = require('../models/userModel.js');
 async function createAppointment(req, res) {
   try {
     const { dateTime, doctorId } = req.body;
-    const createdBy = req.user && req.user.id;
+    const createdBy = req.user?.id;
 
-    if (!createdBy) {
-      return res.status(401).send({
-        msg: "Unauthorized",
+    if (!createdBy || !doctorId || !dateTime) {
+      return res.status(400).send({
         success: false,
+        msg: "Missing required fields",
       });
     }
 
-    console.log("Creating appointment:", { dateTime, doctorId, createdBy });
+    console.log("Creating appointment:", {
+      patient: createdBy,
+      doctorUserId: doctorId,
+      dateTime,
+    });
 
     const newAppointment = await Appointment.create({
       dateTime,
-      doctorId,
+      doctorId,      // MUST be User.id
       createdBy,
+      status: "Pending",
     });
 
-    if (!newAppointment) {
-      return res.status(400).send({
-        msg: "Appointment not created",
-        success: false,
-      });
-    }
-
-    console.log("Appointment created successfully:", newAppointment.id);
-
-    return res.status(200).send({
-      msg: "Appointment created successfully",
+    return res.status(201).send({
       success: true,
+      msg: "Appointment created successfully",
+      appointment: newAppointment,
     });
   } catch (error) {
     console.error("Error creating appointment:", error);
     return res.status(500).send({
+      success: false,
       msg: "Server Error",
-      error: error.message,
     });
   }
 }
+
 
 
 // ================= STATUS UPDATE BY DOCTOR =================
@@ -271,6 +269,7 @@ async function showAppointmentsOfDoctor(req, res) {
     });
   }
 }
+
 
 
 // ================= EXPORTS =================

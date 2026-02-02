@@ -8,7 +8,7 @@ BASEURL = 'http://localhost:7005/uploads';
 const register = async (req, res) => {
     console.log(req.body)
 
-    const { name, email, contactNumber, address } = req.body;
+    const { name, email, contactNumber, address, gender } = req.body;
     let { password } = req.body;
     imagePath = req.file ? req.file.filename : null
 
@@ -30,6 +30,7 @@ const register = async (req, res) => {
             password,
             contactNumber,
             address,
+            gender,
             imagePath
         });
 
@@ -111,15 +112,27 @@ const getUserInfo = async (req, res) => {
 
 
 const doctorList = async (req, res) => {
-    console.log(req.user, "In controller")
     try {
-        const doctors = await User.findAll({
-            where: { role: 'doctor' },
-            attributes: ["id", "name"]
-        })
-        res.status(200).json({ doctors: doctors, success: true });
+        const doctors = await Doctor.findAll({
+            where: { status: "Accepted" },
+            include: [
+                {
+                    model: User,
+                    as: "user",
+                    attributes: ["id", "name", "gender"],
+                },
+            ],
+        });
+
+        res.status(200).json({
+            success: true,
+            doctors,
+        });
     } catch (error) {
-        res.status(500).send({ msg: "Server Error", error: error.message });
+        res.status(500).send({
+            msg: "Server Error",
+            error: error.message,
+        });
     }
 };
 
@@ -127,7 +140,7 @@ const userList = async (req, res) => {
     console.log(req.user, "In controller")
     try {
         const users = await User.findAll({
-            where: { role: 'user' },
+            where: { role: 'User' },
             attributes: ["id", "name", "email", "contactNumber", "address", "imagePath"]
         })
         if (users && users.length > 0) {
