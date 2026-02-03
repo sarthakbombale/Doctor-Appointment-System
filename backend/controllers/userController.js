@@ -141,7 +141,15 @@ const userList = async (req, res) => {
     try {
         const users = await User.findAll({
             where: { role: 'User' },
-            attributes: ["id", "name", "email", "contactNumber", "address", "imagePath"]
+            attributes: [
+                "id",
+                "name",
+                "email",
+                "contactNumber",
+                "address",
+                "gender",
+                "imagePath"
+            ]
         })
         if (users && users.length > 0) {
             users.forEach(user => {
