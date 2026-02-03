@@ -51,7 +51,7 @@ const AllDoctors = () => {
                     <td>{doc.name}</td>
                     <td>{doc.email}</td>
                     <td>{doc.contactNumber || "N/A"}</td>
-                    <td>{doc.gender || "N/A"}</td>
+                    <td>{doc.user?.gender || "N/A"}</td>
                     <td>{doc.specialist || "N/A"}</td>
                     <td>₹{doc.fees || 0}</td>
                   </tr>
