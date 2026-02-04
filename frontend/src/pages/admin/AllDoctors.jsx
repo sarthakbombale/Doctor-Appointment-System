@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getAllDoctorDetails } from "../../api/doctorAPI.js";
+import { getAllDoctorDetails } from "../../api/doctorApi.js";
 
 const AllDoctors = () => {
   const [doctors, setDoctors] = useState([]);
@@ -51,7 +51,7 @@ const AllDoctors = () => {
                     <td>{doc.name}</td>
                     <td>{doc.email}</td>
                     <td>{doc.contactNumber || "N/A"}</td>
-                    <td>{doc.user?.gender || "N/A"}</td>
+                    <td>{doc.gender || "N/A"}</td>
                     <td>{doc.specialist || "N/A"}</td>
                     <td>₹{doc.fees || 0}</td>
                   </tr>

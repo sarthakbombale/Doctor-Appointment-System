@@ -11,6 +11,7 @@ const applyDoctor = async (req, res) => {
       Specialist: specialist,
       fees,
       createdBy,
+      status: "Pending",
     });
 
     res.status(200).send({
@@ -83,6 +84,7 @@ const docStatus = async (req, res) => {
 const getAllDoctors = async (req, res) => {
   try {
     const doctors = await Doctor.findAll({
+      where: { status: "Accepted" },
       include: [
         {
           model: User,
@@ -94,15 +96,15 @@ const getAllDoctors = async (req, res) => {
 
     // Flatten each doctor object
     const formattedDoctors = doctors.map(doc => ({
-      doctorId: doc.id,                // Doctor table id
-      name: doc.user?.name || "N/A",
-      email: doc.user?.email || "N/A",
-      contactNumber: doc.user?.contactNumber || "N/A",
-      gender: doc.user?.gender || "N/A",
-      specialist: doc.Specialist,
-      fees: doc.fees,
-      status: doc.status,
-    }));
+  doctorId: doc.id,
+  name: doc.user?.name || "N/A",
+  email: doc.user?.email || "N/A",
+  contactNumber: doc.user?.contactNumber || "N/A",
+  gender: doc.user?.gender || "N/A",
+  specialist: doc.Specialist,
+  fees: doc.fees,
+  status: doc.status,
+}));
 
     res.status(200).send({
       success: true,
