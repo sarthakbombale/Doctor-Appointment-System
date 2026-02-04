@@ -78,8 +78,8 @@ const DoctorApplications = () => {
                   <tr key={app.id}>
                     <td>{index + 1}</td>
                     <td>{app.id}</td>
-                    <td>{app.User?.name || "N/A"}</td>
-                    <td>{app.User?.email || "N/A"}</td>
+                    <td>{app.user?.name || "N/A"}</td>
+                    <td>{app.user?.email || "N/A"}</td>
                     <td>{app.Specialist}</td>
                     <td>{app.fees}</td>
                     <td>{statusBadge(app.status)}</td>
