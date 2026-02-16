@@ -1,49 +1,57 @@
-/* Page wrapper */
-.admin-dashboard {
-  padding: 20px;
+.admin-dashboard-wrapper {
+  background-color: #f1f5f9;
+  min-height: 100vh;
 }
 
-/* Title */
-.admin-dashboard h3 {
-  font-weight: 700;
-  margin-bottom: 25px;
+.admin-stat-card {
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Stat cards */
-.admin-card {
-  border: none;
-  border-radius: 14px;
-  color: #fff;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-}
-
-.admin-card:hover {
+.admin-stat-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Gradient variations */
-.bg-users {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+/* Icon Box Styles */
+.icon-box {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
 }
 
-.bg-doctors {
-  background: linear-gradient(135deg, #43e97b, #38f9d7);
+.stat-users { background-color: #e0f2fe; color: #0369a1; }
+.stat-doctors { background-color: #dcfce7; color: #15803d; }
+.stat-appointments { background-color: #fef3c7; color: #b45309; }
+
+/* Labels */
+.trend-label {
+  padding: 4px 10px;
+  background-color: #f8fafc;
+  border-radius: 20px;
+  color: #64748b;
+  font-weight: 500;
 }
 
-.bg-appointments {
-  background: linear-gradient(135deg, #fa709a, #fee140);
+.placeholder-chart {
+  background-color: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
 }
 
-/* Card text */
-.admin-card .card-title {
-  font-size: 16px;
-  font-weight: 600;
-  opacity: 0.9;
+.admin-notice-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a) !important;
 }
 
-.admin-card h2 {
-  font-size: 40px;
-  font-weight: 800;
-  margin-top: 10px;
+/* Typography */
+.admin-stat-card h2 {
+  color: #0f172a;
+  letter-spacing: -1px;
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard-wrapper { padding: 15px; }
 }

@@ -1,0 +1,53 @@
+.appointment-card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.appointment-table thead th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 18px 20px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.appointment-table tbody td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+/* Avatar Placeholder Icons */
+.avatar-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+/* Status Colors (Using CSS variables for readability) */
+.warning-subtle { background-color: #fffbeb !important; border-color: #fde68a !important; }
+.warning-emphasis { color: #92400e !important; }
+
+.info-subtle { background-color: #f0f9ff !important; border-color: #bae6fd !important; }
+.info-emphasis { color: #0369a1 !important; }
+
+.success-subtle { background-color: #f0fdf4 !important; border-color: #bbf7d0 !important; }
+.success-emphasis { color: #166534 !important; }
+
+.danger-subtle { background-color: #fef2f2 !important; border-color: #fecaca !important; }
+.danger-emphasis { color: #991b1b !important; }
+
+.x-small {
+    font-size: 0.75rem;
+}
+
+/* Row Hover */
+.appointment-table tbody tr:hover {
+    background-color: #fbfcfe;
+    transition: 0.2s ease-in-out;
+}

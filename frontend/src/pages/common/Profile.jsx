@@ -1,26 +1,18 @@
 import { useEffect, useState } from "react";
-import { Card, Spinner, Button, Form, Image, Row, Col } from "react-bootstrap";
+import { Card, Spinner, Button, Form, Image, Row, Col, Badge } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { getUserInfo, updateUser } from "../../api/userAPI.js";
+import { User, Mail, Phone, MapPin, Camera, Save, X, Edit2, Transgender } from "lucide-react";
 import "../../styles/Profile.css";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    contactNumber: "",
-    gender: "",
-  });
-
+  const [formData, setFormData] = useState({ name: "", address: "", contactNumber: "", gender: "" });
   const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState(null);
 
-  /* ======================
-     FETCH PROFILE
-  =======================*/
   const fetchProfile = async () => {
     try {
       const res = await getUserInfo();
@@ -38,191 +30,132 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+  useEffect(() => { fetchProfile(); }, []);
 
-  if (!user) {
-    return (
-      <div className="profile-loader">
-        <Spinner animation="border" />
-        <p>Loading profile...</p>
-      </div>
-    );
-  }
-
-  /* ======================
-     HANDLERS
-  =======================*/
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
+    const file = e.target.files[0];
+    setImageFile(file);
+    if (file) setPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const payload = new FormData();
-      payload.append("name", formData.name);
-      payload.append("address", formData.address);
-      payload.append("contactNumber", formData.contactNumber);
-      payload.append("gender", formData.gender);
-
-      if (imageFile) {
-        payload.append("userImage", imageFile);
-      }
+      Object.keys(formData).forEach(key => payload.append(key, formData[key]));
+      if (imageFile) payload.append("userImage", imageFile);
 
       const res = await updateUser(payload);
-
       if (res.data.success) {
-        toast.success("Profile updated successfully");
+        toast.success("Profile updated!");
         setEditMode(false);
         fetchProfile();
       }
     } catch (error) {
-      toast.error(error.response?.data?.msg || "Profile update failed");
+      toast.error("Update failed");
     } finally {
       setLoading(false);
     }
   };
 
-  /* ======================
-     VIEW MODE
-  =======================*/
-  if (!editMode) {
-    return (
-      <div className="profile-container">
-        <Card className="profile-card shadow-sm">
-          <div className="profile-header text-center">
-            <div className="profile-avatar mb-2">
-              {user.imagePath ? (
-                <Image src={user.imagePath} roundedCircle width={120} height={120} />
-              ) : (
-                <div className="avatar-placeholder">
-                  {user.name?.charAt(0)}
-                </div>
+  if (!user) return (
+    <div className="profile-loader"><Spinner animation="border" variant="primary" /><p>Syncing Data...</p></div>
+  );
+
+  return (
+    <div className="profile-wrapper py-5">
+      <Card className="profile-main-card border-0 shadow-lg">
+        {/* Banner Decoration */}
+        <div className="profile-banner"></div>
+
+        <Card.Body className="pt-0">
+          <div className="profile-top-section">
+            <div className="avatar-container">
+              <Image 
+                src={preview || user.imagePath || "https://via.placeholder.com/150"} 
+                className="main-avatar shadow"
+              />
+              {editMode && (
+                <label className="avatar-edit-badge">
+                  <Camera size={16} />
+                  <input type="file" hidden onChange={handleImageChange} />
+                </label>
               )}
             </div>
-
-            <h4>{user.name}</h4>
-            <span className="text-muted">{user.role}</span>
+            
+            <div className="profile-intro mt-3">
+              <h3 className="fw-bold m-0">{user.name}</h3>
+              <Badge bg="soft-primary" className="role-badge mt-1">{user.role}</Badge>
+            </div>
           </div>
 
-          <Card.Body>
-            <Row className="mb-2">
-              <Col sm={4}><strong>Email</strong></Col>
-              <Col sm={8}>{user.email}</Col>
-            </Row>
+          <hr className="my-4 opacity-50" />
 
-            <Row className="mb-2">
-              <Col sm={4}><strong>Contact</strong></Col>
-              <Col sm={8}>{user.contactNumber || "N/A"}</Col>
-            </Row>
-
-            <Row className="mb-2">
-              <Col sm={4}><strong>Address</strong></Col>
-              <Col sm={8}>{user.address || "N/A"}</Col>
-            </Row>
-
-            <Row className="mb-2">
-              <Col sm={4}><strong>Gender</strong></Col>
-              <Col sm={8}>{user.gender || "N/A"}</Col>
-            </Row>
-
-            <Row className="mb-3">
-              <Col sm={4}><strong>Role</strong></Col>
-              <Col sm={8}>{user.role}</Col>
-            </Row>
-
-            <div className="text-end">
-              <Button onClick={() => setEditMode(true)}>
-                Edit Profile
-              </Button>
+          {editMode ? (
+            /* EDIT MODE FORM */
+            <Form onSubmit={handleSubmit} className="px-md-4">
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Label className="small fw-bold">Full Name</Form.Label>
+                  <Form.Control name="name" value={formData.name} onChange={handleChange} required />
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Label className="small fw-bold">Contact Number</Form.Label>
+                  <Form.Control name="contactNumber" value={formData.contactNumber} onChange={handleChange} />
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Label className="small fw-bold">Gender</Form.Label>
+                  <Form.Select name="gender" value={formData.gender} onChange={handleChange}>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </Form.Select>
+                </Col>
+                <Col md={12} className="mb-4">
+                  <Form.Label className="small fw-bold">Residential Address</Form.Label>
+                  <Form.Control as="textarea" rows={2} name="address" value={formData.address} onChange={handleChange} />
+                </Col>
+              </Row>
+              <div className="d-flex gap-2 justify-content-end mb-3">
+                <Button variant="light" onClick={() => setEditMode(false)} className="px-4"><X size={18} className="me-1"/> Cancel</Button>
+                <Button type="submit" disabled={loading} className="btn-save px-4"><Save size={18} className="me-1"/> {loading ? "Saving..." : "Save Changes"}</Button>
+              </div>
+            </Form>
+          ) : (
+            /* VIEW MODE DETAILS */
+            <div className="profile-details px-md-4">
+              <Row className="g-4">
+                <DetailItem icon={<Mail size={20}/>} label="Email Address" value={user.email} />
+                <DetailItem icon={<Phone size={20}/>} label="Phone" value={user.contactNumber || "Not Provided"} />
+                <DetailItem icon={<MapPin size={20}/>} label="Location" value={user.address || "Not Provided"} />
+                <DetailItem icon={<User size={20}/>} label="Gender" value={user.gender || "Not Provided"} />
+              </Row>
+              <div className="text-center mt-5 mb-3">
+                <Button onClick={() => setEditMode(true)} className="btn-edit-profile px-5 rounded-pill">
+                  <Edit2 size={16} className="me-2" /> Edit Personal Info
+                </Button>
+              </div>
             </div>
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  }
-
-  /* ======================
-     EDIT MODE
-  =======================*/
-  return (
-    <div className="profile-container">
-      <Card className="profile-card shadow-sm">
-        <Card.Body>
-          <h4 className="mb-3">Edit Profile</h4>
-
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Contact Number</Form.Label>
-              <Form.Control
-                name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Gender</Form.Label>
-              <Form.Select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-              >
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Profile Image</Form.Label>
-              <Form.Control type="file" onChange={handleImageChange} />
-            </Form.Group>
-
-            <div className="d-flex gap-2">
-              <Button type="submit" disabled={loading}>
-                {loading ? "Updating..." : "Save"}
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => setEditMode(false)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </Form>
+          )}
         </Card.Body>
       </Card>
     </div>
   );
 };
+
+// Reusable Detail Component
+const DetailItem = ({ icon, label, value }) => (
+  <Col md={6} className="d-flex align-items-center gap-3">
+    <div className="detail-icon">{icon}</div>
+    <div>
+      <p className="text-muted small mb-0">{label}</p>
+      <p className="fw-semibold mb-0">{value}</p>
+    </div>
+  </Col>
+);
 
 export default Profile;

@@ -1,70 +1,141 @@
-/* Full page center */
-.login-container {
+/* Color Palette: Teal & Soft Blue */
+:root {
+  --medical-teal: #0d9488;
+  --medical-dark: #134e4a;
+  --medical-light: #f0fdfa;
+  --soft-gray: #f8fafc;
+}
+
+.login-page-wrapper {
   min-height: 100vh;
   display: flex;
+  align-items: center;
+  background-color: var(--soft-gray);
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.login-flex-container {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Left Brand Section */
+.login-brand-section {
+  flex: 1;
+  background: linear-gradient(135deg, var(--medical-teal), var(--medical-dark));
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  padding: 20px;
-}
-
-/* Card */
-.login-card {
-  width: 100%;
-  max-width: 400px;
-  padding: 30px 25px;
-  border-radius: 12px;
-  border: none;
-  background: #ffffff;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-/* Title */
-.login-card h3 {
-  font-weight: 700;
+  color: white;
   text-align: center;
-  margin-bottom: 25px;
 }
 
-/* Inputs */
-.login-card input {
-  height: 45px;
-  border-radius: 8px;
-  font-size: 14px;
+.brand-icon-circle {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  backdrop-filter: blur(5px);
 }
 
-.login-card input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+.brand-content h1 {
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
-/* Button */
-.login-btn {
-  height: 45px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+.brand-content p {
+  opacity: 0.9;
+  font-size: 0.95rem;
+  max-width: 250px;
+}
+
+/* Right Auth Section */
+.login-auth-card {
+  flex: 1.2;
+  border: none !important;
+  padding: 40px 30px;
+}
+
+.form-header {
+  margin-bottom: 30px;
+}
+
+.form-header h3 {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Styled Inputs */
+.custom-input-group {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: 0.3s;
+}
+
+.custom-input-group:focus-within {
+  border-color: var(--medical-teal);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+.custom-input-group .input-group-text {
+  background-color: #fff;
   border: none;
+  color: #94a3b8;
+  padding-right: 5px;
+}
+
+.custom-input-group input {
+  border: none !important;
+  padding: 12px 10px;
+  font-size: 0.95rem;
+}
+
+.custom-input-group input:focus {
+  box-shadow: none !important;
+}
+
+/* Buttons */
+.btn-medical-primary {
+  background-color: var(--medical-teal);
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
   font-weight: 600;
-  transition: 0.3s ease;
+  transition: all 0.3s;
 }
 
-.login-btn:hover {
-  transform: translateY(-1px);
+.btn-medical-primary:hover {
+  background-color: var(--medical-dark);
+  transform: translateY(-2px);
 }
 
-/* Register link */
+/* Footer Link */
 .login-footer {
   text-align: center;
-  margin-top: 15px;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .login-footer a {
-  color: #667eea;
+  color: var(--medical-teal);
   font-weight: 600;
   text-decoration: none;
 }
 
-.login-footer a:hover {
-  text-decoration: underline;
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .login-flex-container {
+    margin: 10px;
+    border-radius: 15px;
+  }
+  .login-auth-card {
+    padding: 30px 20px;
+  }
 }

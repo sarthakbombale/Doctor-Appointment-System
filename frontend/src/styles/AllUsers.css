@@ -1,0 +1,61 @@
+.users-card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.search-bar {
+    max-width: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.user-table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 15px 20px;
+    border-top: none;
+}
+
+.user-table tbody td {
+    padding: 15px 20px;
+    color: #334155;
+    border-color: #f1f5f9;
+}
+
+/* Avatar Styling */
+.user-avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #e2e8f0;
+    color: #475569;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.x-small {
+    font-size: 0.7rem;
+}
+
+/* Hover effect */
+.user-table tbody tr:hover {
+    background-color: #f8fafc;
+    cursor: default;
+}
+
+/* Custom Scrollbar for responsiveness */
+.table-responsive::-webkit-scrollbar {
+    height: 6px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}

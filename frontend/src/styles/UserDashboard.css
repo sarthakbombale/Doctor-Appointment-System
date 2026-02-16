@@ -1,37 +1,72 @@
-/* Page wrapper */
-.user-dashboard {
-  padding: 20px;
+.user-dashboard-container {
+    padding: 30px;
+    background-color: #f8fafc;
+    min-height: 100vh;
 }
 
-/* Title */
-.user-dashboard h3 {
-  font-weight: 700;
-  margin-bottom: 25px;
+/* Header Action Button */
+.btn-book-action {
+    background-color: #0d9488;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
-/* Stat card */
-.dashboard-card {
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #fff;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+.btn-book-action:hover {
+    background-color: #0f766e;
+    transform: translateY(-2px);
 }
 
-.dashboard-card:hover {
-  transform: translateY(-5px);
+/* Stat Cards */
+.stat-card {
+    border-radius: 16px;
+    transition: 0.3s ease;
 }
 
-/* Card content */
-.dashboard-card .card-title {
-  font-size: 16px;
-  font-weight: 600;
-  opacity: 0.9;
+.stat-card:hover {
+    transform: translateY(-5px);
 }
 
-.dashboard-card h2 {
-  font-size: 42px;
-  font-weight: 800;
-  margin-top: 10px;
+.icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Color Themes for Icons */
+.blue-bg { background-color: #e0f2fe; color: #0369a1; }
+.orange-bg { background-color: #ffedd5; color: #9a3412; }
+.green-bg { background-color: #dcfce7; color: #15803d; }
+
+/* Activity Section */
+.empty-activity {
+    border: 2px dashed #e2e8f0;
+    border-radius: 12px;
+}
+
+.quick-info-card {
+    border-radius: 16px;
+}
+
+.tip-item {
+    display: flex;
+    align-items: flex-start;
+    color: #475569;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .user-dashboard-container {
+        padding: 15px;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
 }

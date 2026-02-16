@@ -1,37 +1,41 @@
 import { useEffect, useState } from "react";
-import { Table, Card, Button, Badge } from "react-bootstrap";
+import { Table, Card, Button, Badge, Container, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { updateDoctorStatus } from "../../api/doctorApi.js"
+import { CheckCircle, XCircle, Clock, User, Mail, IndianRupee } from "lucide-react";
+import { updateDoctorStatus } from "../../api/doctorApi.js";
 import axiosInstance from "../../api/axiosInstance.js";
+import "../../styles/DoctorApplications.css";
 
 const DoctorApplications = () => {
   const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [actionId, setActionId] = useState(null); // Track which button is loading
 
   const fetchApplications = async () => {
     try {
       const res = await axiosInstance.get("/doc/applications");
-
       if (res.data.success) {
         setApplications(res.data.data || []);
-      } else {
-        setApplications([]);
       }
     } catch (error) {
-      toast.error("Failed to fetch doctor applications");
-      setApplications([]);
+      toast.error("Failed to fetch applications");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleStatusUpdate = async (doctorId, status) => {
+    setActionId(doctorId);
     try {
-      const res = await updateDoctorStatus(doctorId, status); // ✅ FIXED
-
+      const res = await updateDoctorStatus(doctorId, status);
       if (res.data.success) {
-        toast.success(res.data.msg);
+        toast.success(res.data.msg || `Application ${status}`);
         fetchApplications();
       }
     } catch (error) {
       toast.error("Failed to update status");
+    } finally {
+      setActionId(null);
     }
   };
 
@@ -39,78 +43,105 @@ const DoctorApplications = () => {
     fetchApplications();
   }, []);
 
-  const statusBadge = (status) => {
-    switch (status) {
-      case "Pending":
-        return <Badge bg="warning">Pending</Badge>;
-      case "Accepted":
-        return <Badge bg="success">Accepted</Badge>;
-      case "Rejected":
-        return <Badge bg="danger">Rejected</Badge>;
-      default:
-        return status;
-    }
+  const getStatusBadge = (status) => {
+    const configs = {
+      Pending: { bg: "warning-subtle", text: "warning-emphasis", icon: <Clock size={12} /> },
+      Accepted: { bg: "success-subtle", text: "success-emphasis", icon: <CheckCircle size={12} /> },
+      Rejected: { bg: "danger-subtle", text: "danger-emphasis", icon: <XCircle size={12} /> },
+    };
+    const config = configs[status] || { bg: "secondary", text: "white", icon: null };
+    
+    return (
+      <Badge bg={config.bg} className={`${config.text} border d-inline-flex align-items-center gap-1 px-2 py-1`}>
+        {config.icon} {status}
+      </Badge>
+    );
   };
 
   return (
-    <>
-      <h3 className="mb-4">Doctor Applications</h3>
+    <Container fluid className="py-4">
+      <div className="mb-4">
+        <h3 className="fw-bold m-0">Doctor Applications</h3>
+        <p className="text-muted small">Review and manage professional onboarding requests.</p>
+      </div>
 
-      <Card className="shadow-sm">
-        <Card.Body>
-          <Table striped bordered hover responsive>
+      <Card className="border-0 shadow-sm application-card">
+        <Card.Body className="p-0">
+          <Table responsive hover className="align-middle mb-0 custom-app-table">
             <thead>
               <tr>
-                <th>#</th>
-                <th>Application ID</th>
-                <th>Doctor Name</th>
-                <th>Email</th>
-                <th>Specialist</th>
-                <th>Fees</th>
+                <th className="ps-4">Doctor Info</th>
+                <th>Specialization</th>
+                <th>Consultation Fee</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th className="text-end pe-4">Actions</th>
               </tr>
             </thead>
-
             <tbody>
-              {applications.length > 0 ? (
-                applications.map((app, index) => (
+              {loading ? (
+                <tr>
+                  <td colSpan="5" className="text-center py-5">
+                    <Spinner animation="border" variant="primary" size="sm" />
+                    <div className="mt-2 text-muted small">Retrieving applications...</div>
+                  </td>
+                </tr>
+              ) : applications.length > 0 ? (
+                applications.map((app) => (
                   <tr key={app.id}>
-                    <td>{index + 1}</td>
-                    <td>{app.id}</td>
-                    <td>{app.user?.name || "N/A"}</td>
-                    <td>{app.user?.email || "N/A"}</td>
-                    <td>{app.Specialist}</td>
-                    <td>{app.fees}</td>
-                    <td>{statusBadge(app.status)}</td>
+                    <td className="ps-4">
+                      <div className="d-flex align-items-center">
+                        <div className="app-avatar me-3">
+                          <User size={18} />
+                        </div>
+                        <div>
+                          <div className="fw-bold text-dark">{app.user?.name || "Unknown"}</div>
+                          <div className="text-muted x-small d-flex align-items-center gap-1">
+                            <Mail size={10} /> {app.user?.email || "N/A"}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
                     <td>
-                      {app.status === "Pending" && (
-                        <>
+                      <span className="fw-semibold text-secondary">{app.Specialist}</span>
+                    </td>
+                    <td>
+                      <div className="d-flex align-items-center text-dark fw-medium">
+                        <IndianRupee size={14} className="text-muted" /> {app.fees}
+                      </div>
+                    </td>
+                    <td>{getStatusBadge(app.status)}</td>
+                    <td className="text-end pe-4">
+                      {app.status === "Pending" ? (
+                        <div className="d-flex gap-2 justify-content-end">
                           <Button
                             size="sm"
                             variant="success"
-                            className="me-2"
+                            className="btn-action shadow-sm"
+                            disabled={actionId === app.id}
                             onClick={() => handleStatusUpdate(app.id, "Accepted")}
                           >
-                            Approve
+                            <CheckCircle size={14} className="me-1" /> Approve
                           </Button>
-
                           <Button
                             size="sm"
-                            variant="danger"
-                            onClick={() => handleStatusUpdate(app.id, "Reject")}
+                            variant="outline-danger"
+                            className="btn-action"
+                            disabled={actionId === app.id}
+                            onClick={() => handleStatusUpdate(app.id, "Rejected")}
                           >
-                            Reject
+                            <XCircle size={14} className="me-1" /> Reject
                           </Button>
-                        </>
+                        </div>
+                      ) : (
+                        <span className="text-muted small italic">Processed</span>
                       )}
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="text-center">
-                    No doctor applications found
+                  <td colSpan="5" className="text-center py-5 text-muted">
+                    No applications currently in queue.
                   </td>
                 </tr>
               )}
@@ -118,7 +149,7 @@ const DoctorApplications = () => {
           </Table>
         </Card.Body>
       </Card>
-    </>
+    </Container>
   );
 };
 

@@ -1,0 +1,93 @@
+.appointments-container {
+    padding: 20px;
+}
+
+.table-card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.appointment-table thead {
+    background-color: #f8fafc;
+}
+
+.appointment-table thead th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.appointment-table tbody td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.doc-icon-small {
+    width: 35px;
+    height: 35px;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+/* Status Pill Styling */
+.status-pill {
+    padding: 6px 12px;
+    font-weight: 500;
+    font-size: 0.75rem;
+    border-radius: 20px;
+}
+
+/* Action Buttons */
+.action-btn {
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    border: 1px solid #e2e8f0;
+}
+
+.action-btn.edit:hover {
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border-color: #16a34a;
+}
+
+.action-btn.delete:hover {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border-color: #dc2626;
+}
+
+/* Modal Styling */
+.custom-input {
+    border-radius: 10px;
+    padding: 12px;
+    border: 2px solid #f1f5f9;
+}
+
+.custom-input:focus {
+    border-color: #0d6efd;
+    box-shadow: none;
+}
+
+.btn-confirm-update {
+    background-color: #0d6efd;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
+.x-small {
+    font-size: 0.75rem;
+}

@@ -1,0 +1,148 @@
+.booking-header h2 {
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.booking-card {
+    border-radius: 20px;
+    background: #ffffff;
+}
+
+/* Step Numbers */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-number {
+    background: #e0f2fe;
+    color: #0369a1;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* Doctor Grid Selection */
+.doctor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 15px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.doctor-option {
+    border: 2px solid #f1f5f9;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.doctor-option:hover {
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+}
+
+.doctor-option.active {
+    border-color: #0d6efd;
+    background-color: #f0f7ff;
+}
+
+.doc-avatar {
+    width: 45px;
+    height: 45px;
+    background: #0d6efd;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.doc-name {
+    font-weight: 700;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.spec-badge {
+    font-size: 0.7rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.doc-meta {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* Form Styling */
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    z-index: 5;
+}
+
+.custom-input {
+    padding-left: 45px !important;
+    height: 50px;
+    border-radius: 12px;
+    border: 2px solid #f1f5f9;
+}
+
+.btn-book-now {
+    height: 50px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: #0d6efd;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+/* Side Card */
+.info-card {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.guideline-list {
+    list-style: none;
+    padding: 0;
+}
+
+.guideline-list li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* Custom Scrollbar */
+.doctor-grid::-webkit-scrollbar {
+    width: 6px;
+}
+.doctor-grid::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}

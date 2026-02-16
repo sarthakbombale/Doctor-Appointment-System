@@ -1,0 +1,48 @@
+.doc-app-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.custom-doc-table thead th {
+  background-color: #f8fafc;
+  color: #64748b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.custom-doc-table tbody td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.patient-init {
+  width: 32px;
+  height: 32px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6366f1;
+}
+
+.action-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+}
+
+.x-small {
+  font-size: 0.75rem;
+}
+
+/* Subtle Badge Styles */
+.text-warning-emphasis { color: #854d0e !important; }
+.text-success-emphasis { color: #166534 !important; }
+.text-danger-emphasis { color: #991b1b !important; }
+.text-primary-emphasis { color: #075985 !important; }

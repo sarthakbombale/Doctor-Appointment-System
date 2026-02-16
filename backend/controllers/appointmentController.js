@@ -49,17 +49,18 @@ async function statusUpdateByDoctor(req, res) {
   const { ID } = req.params;
   const { status } = req.body;
 
-  const allowedStatus = ["Pending", "Accepted", "Rejected"];
+  // 1. ADD "Completed" to this list
+  const allowedStatus = ["Pending", "Accepted", "Rejected", "Completed"];
+
   if (!allowedStatus.includes(status)) {
     return res.status(400).send({
-      msg: "Invalid status value",
+      msg: `Invalid status value. Received: ${status}. Expected one of: ${allowedStatus.join(", ")}`,
       success: false,
     });
   }
 
   try {
-    console.log("Updating appointment status:", ID, status);
-
+    // 2. Ensure ID is correctly mapped (Sequelize expects 'id' usually)
     const updatedAppointment = await Appointment.update(
       {
         status,

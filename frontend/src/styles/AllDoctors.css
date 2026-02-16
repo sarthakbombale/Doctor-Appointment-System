@@ -1,0 +1,60 @@
+.doctor-table-card {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.custom-table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 18px 20px;
+    border-top: none;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.custom-table tbody td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* Avatar Circle */
+.doctor-avatar {
+    width: 40px;
+    height: 40px;
+    background: #eff6ff;
+    color: #3b82f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+/* Specialty Badge Styling */
+.badge.bg-soft-primary {
+    background-color: #e0e7ff !important;
+    color: #4338ca !important;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+/* Status Badge */
+.dot-badge {
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.x-small {
+    font-size: 0.7rem;
+}
+
+/* Row Hover */
+.custom-table tbody tr:hover {
+    background-color: #f8fafc;
+    transition: 0.2s;
+}

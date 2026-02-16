@@ -1,45 +1,59 @@
-/* Page wrapper */
-.doctor-dashboard {
-  padding: 20px;
+.doctor-dashboard-wrapper {
+  background-color: #f8fafc;
+  min-height: 100vh;
 }
 
-/* Title */
-.doctor-dashboard h3 {
-  font-weight: 700;
-  margin-bottom: 25px;
+.doctor-stat-card {
+  border-radius: 20px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  position: relative;
 }
 
-/* Stat cards */
-.doctor-card {
-  border: none;
-  border-radius: 14px;
-  color: #fff;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+.doctor-stat-card:hover {
+  transform: translateY(-8px);
 }
 
-.doctor-card:hover {
-  transform: translateY(-5px);
+/* Gradients */
+.bg-primary-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
 }
 
-/* Card gradients */
-.bg-appointments {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+.bg-success-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
-.bg-patients {
-  background: linear-gradient(135deg, #43e97b, #38f9d7);
+/* Decorative Circles */
+.doctor-stat-card::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: -50px;
+  right: -50px;
 }
 
-/* Card text */
-.doctor-card .card-title {
-  font-size: 16px;
-  font-weight: 600;
-  opacity: 0.9;
+.stat-icon-wrapper {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 15px;
+  backdrop-filter: blur(4px);
 }
 
-.doctor-card h2 {
-  font-size: 40px;
-  font-weight: 800;
-  margin-top: 10px;
+.next-steps-card {
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+
+.btn-light {
+    background: #ffffff;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.btn-light:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
 }
