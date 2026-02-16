@@ -9,3 +9,13 @@
 ## 🛠 Admin Panel
 <img width="1904" height="883" alt="Screenshot 2026-02-16 225914" src="https://github.com/user-attachments/assets/4ebb1141-58eb-4560-afe0-46baa2eb048c" />
 
+## 🙎‍♂️ Profile
+<img width="1898" height="879" alt="Screenshot 2026-02-16 230814" src="https://github.com/user-attachments/assets/95176299-1be3-420b-a46d-3ac6595a82e7" />
+
+## Booking Appointment
+<img width="1898" height="876" alt="Screenshot 2026-02-16 231101" src="https://github.com/user-attachments/assets/ee6c4a4a-a0f9-4069-8feb-d9d5a6e7f177" />
+
+## Appying for Doctor
+<img width="959" height="437" alt="image" src="https://github.com/user-attachments/assets/01c4a351-9257-4f83-9698-f9105bdd077e" />
+
+
