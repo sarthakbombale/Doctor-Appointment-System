@@ -11,6 +11,10 @@ const sequelize = new Sequelize(
         dialect: 'mysql',
         define: {
             timestamps: true
+        },
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
         }
     }
 );

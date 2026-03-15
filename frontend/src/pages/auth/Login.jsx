@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Form, Button, Card, Container, InputGroup } from "react-bootstrap";
-import { toast } from "react-toastify";
-import { loginUser } from "../../api/authApi.js";
+import { loginUser } from "../../api/authApi";
 import { useNavigate, Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { Stethoscope, Mail, Lock } from "lucide-react"; // Modern medical icons
