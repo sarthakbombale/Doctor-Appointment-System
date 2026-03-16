@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:7005/api",
+  // This switch ensures it works on your PC AND on Netlify
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:7005/api",
   timeout: 10000,
 });
 
@@ -13,6 +14,7 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
+    // Handle FormData vs JSON automatically
     if (config.data instanceof FormData) {
       delete config.headers["Content-Type"];
     } else {
@@ -27,14 +29,17 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API Error:", {
+    // Log the actual response object to see real server messages
+    console.error("API Error Detailed:", {
       status: error.response?.status,
-      message: error.response?.data?.msg || error.message,
-      url: error.config?.url,
+      data: error.response?.data,
+      message: error.response?.data?.message || error.message,
+      url: config?.url,
     });
 
     if (error.response?.status === 401) {
       localStorage.removeItem("token6163");
+      // Optional: window.location.href = "/login";
     }
 
     return Promise.reject(error);
