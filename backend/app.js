@@ -7,10 +7,6 @@ const userRoute = require('./routes/userRoutes.js');
 const appointmentRoute = require('./routes/appointmentRoute.js')
 const doctorRoute = require('./routes/doctorRoute.js');
 const path = require('path');
-const allowedOrigins = [
-  'https://doctor-app-system.netlify.app', // Your Netlify URL
-  'http://localhost:5173'                  // For local testing
-];
 
 // Import models to establish relationships
 require('./models/index.js');
@@ -18,35 +14,50 @@ require('./models/index.js');
 const app = express();
 const port = process.env.PORT || 7000;
 
+// Centralized allowed origins
+const allowedOrigins = [
+  'https://doctor-app-system.netlify.app',
+  'http://localhost:5173',
+  'http://localhost:7005'
+];
+
 app.use(express.json());
+
+// Enhanced CORS configuration
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl)
+    // Allow requests with no origin (like mobile apps or Postman)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
+    
+    // Remove trailing slash from origin if it exists for the check
+    const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
+
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    } else {
+      console.error(`CORS Blocked: ${origin} is not in allowedOrigins`);
       return callback(new Error('CORS policy: This origin is not allowed'), false);
     }
-    return callback(null, true);
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use("/api/dashboard", dashboardRoute);
 app.use('/api/user', userRoute);
 app.use('/api/appointment', appointmentRoute);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
-
 app.use('/api/doc', doctorRoute);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.get('/', (req, res) => res.send('Hello World'));
+app.get('/', (req, res) => res.send('Backend is running successfully!'));
 
 (async () => {
-  await testConnection();  // ✅ DB connection
-  await syncDB();          // ✅ CREATES TABLE
+  await testConnection();
+  await syncDB();
 })();
 
-app.listen(port, () => console.log(`Server running on ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));
 
 
-
-//   { "name":"Admin", "email":"email@gmail.com", "password":"Admin", "contactNumber":"7249207830", "address":"Pune" }
+//   { "name":"Admin", "email":"email@gmail.com", "password":"Admin", "contactNumber":"7249207830", "address":"Pune" } return corrected
