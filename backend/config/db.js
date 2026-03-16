@@ -7,14 +7,19 @@ const sequelize = new Sequelize(
     process.env.DB_PASSWORD,
     {
         host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT || 3306,
+        // TiDB Cloud usually uses port 4000, local MySQL uses 3306
+        port: process.env.DB_PORT || 3306, 
         dialect: 'mysql',
+        logging: false, // Prevents SQL logs from cluttering your Render console
         define: {
             timestamps: true
         },
-        ssl: {
-            require: true,
-            rejectUnauthorized: false
+        // IMPORTANT: SSL must be inside dialectOptions
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false // Helps avoid certificate mismatch errors in some environments
+            }
         }
     }
 );
@@ -24,15 +29,17 @@ async function testConnection() {
         await sequelize.authenticate();
         console.log('✅ Database connected successfully');
     } catch (error) {
-        console.log('❌ Error while connecting to database', error);
+        console.error('❌ Error while connecting to database:', error.message);
     }
 }
-syncDB = async (force = false, alter = false) => {
+
+const syncDB = async (force = false) => {
     try {
-        await sequelize.sync({ force: alter });
+        // 'force: true' drops tables, 'alter: true' updates columns
+        await sequelize.sync({ force: force });
         console.log('✅ All models were synchronized successfully');
     } catch (error) {
-        console.log('❌ Error syncing models', error);
+        console.error('❌ Error syncing models:', error.message);
     }
 };
 
