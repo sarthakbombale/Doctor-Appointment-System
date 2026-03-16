@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Spinner, Button, Form, Image, Row, Col, Badge } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { getUserInfo, updateUser } from "../../api/userAPI.js";
+import { getUserInfo, updateUser } from "../../api/userApi.js";
 import { User, Mail, Phone, MapPin, Camera, Save, X, Edit2, Transgender } from "lucide-react";
 import "../../styles/Profile.css";
 

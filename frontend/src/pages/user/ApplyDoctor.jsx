@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Card, Row, Col, InputGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { applyForDoctor } from "../../api/doctorAPI.js";
+import { applyForDoctor } from "../../api/doctorApi.js";
 import { Briefcase, IndianRupee, ShieldCheck, ClipboardList, Info } from "lucide-react";
 import "../../styles/ApplyDoctor.css";
 
