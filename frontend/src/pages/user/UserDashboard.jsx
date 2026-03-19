@@ -26,7 +26,7 @@ const UserDashboard = () => {
             completed: res.data.data.completed || 0,
           });
         }
-      } catch (error) {
+      } catch {
         toast.error("Failed to load dashboard data");
       }
     };
@@ -34,23 +34,23 @@ const UserDashboard = () => {
   }, []);
 
   const statItems = [
-    { 
-      title: "Total Visits", 
-      value: stats.totalAppointments, 
-      icon: <Calendar size={24} />, 
-      color: "blue-bg" 
+    {
+      title: "Total Visits",
+      value: stats.totalAppointments,
+      icon: <Calendar size={24} />,
+      color: "blue-bg"
     },
-    { 
-      title: "Upcoming", 
-      value: stats.upcoming, 
-      icon: <Clock size={24} />, 
-      color: "orange-bg" 
+    {
+      title: "Upcoming",
+      value: stats.upcoming,
+      icon: <Clock size={24} />,
+      color: "orange-bg"
     },
-    { 
-      title: "Completed", 
-      value: stats.completed, 
-      icon: <CheckCircle size={24} />, 
-      color: "green-bg" 
+    {
+      title: "Completed",
+      value: stats.completed,
+      icon: <CheckCircle size={24} />,
+      color: "green-bg"
     },
   ];
 
@@ -61,7 +61,7 @@ const UserDashboard = () => {
           <h3 className="fw-bold mb-1">Patient Dashboard</h3>
           <p className="text-muted">Welcome back! Here is your health overview.</p>
         </div>
-        <Button 
+        <Button
           className="btn-book-action d-flex align-items-center gap-2"
           onClick={() => navigate("/user/book-appointment")}
         >
@@ -101,7 +101,7 @@ const UserDashboard = () => {
             </div>
           </Card>
         </Col>
-        
+
         <Col lg={4}>
           <Card className="quick-info-card border-0 shadow-sm p-3 bg-light">
             <h5 className="fw-bold mb-3">Health Tips</h5>
