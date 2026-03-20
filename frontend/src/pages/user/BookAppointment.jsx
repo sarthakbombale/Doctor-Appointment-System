@@ -17,7 +17,7 @@ const BookAppointment = () => {
       if (res.data.success) {
         setDoctors(res.data.doctors || []);
       }
-    } catch (error) {
+    } catch  {
       toast.error("Failed to fetch doctors");
     }
   };
