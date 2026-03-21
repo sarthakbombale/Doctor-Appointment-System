@@ -160,7 +160,13 @@ const updateUser = async (req, res) => {
 
     } catch (error) {
         console.error("updateUser ERROR:", error);
-        res.status(500).send({ msg: "Server Error", error: error.message });
+        // Explicitly send error.message so the frontend sees "config is not defined" 
+        // instead of an empty alert or [object Object]
+        res.status(500).json({ 
+            success: false, 
+            msg: error.message || "Server Error", 
+            error: error.message 
+        });
     }
 };
 

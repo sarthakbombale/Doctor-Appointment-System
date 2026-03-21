@@ -1,4 +1,5 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config(); // Explicitly call it before anything else
 const express = require('express');
 const cors = require('cors');
 const { testConnection, syncDB } = require('./config/db.js');

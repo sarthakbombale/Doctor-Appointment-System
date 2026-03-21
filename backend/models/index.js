@@ -42,5 +42,6 @@ User.hasOne(Doctor, {
 
 module.exports = {
   User,
-  Doctor
+  Doctor,
+  Appointment
 };
