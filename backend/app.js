@@ -2,12 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { testConnection, syncDB } = require('./config/db.js');
-const dashboardRoute = require("./routes/dashboardRoutes");
-const userRoute = require('./routes/userRoutes.js');
-const appointmentRoute = require('./routes/appointmentRoute.js')
-const doctorRoute = require('./routes/doctorRoute.js');
-const path = require('path');
-
 // Import models to establish relationships
 require('./models/index.js');
 
@@ -23,12 +17,20 @@ const allowedOrigins = [
 
 app.use(express.json());
 
+const dashboardRoute = require("./routes/dashboardRoutes");
+const userRoute = require('./routes/userRoutes.js');
+const appointmentRoute = require('./routes/appointmentRoute.js')
+const doctorRoute = require('./routes/doctorRoute.js');
+const path = require('path');
+
+
+
 // Enhanced CORS configuration
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or Postman)
     if (!origin) return callback(null, true);
-    
+
     // Remove trailing slash from origin if it exists for the check
     const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
 
@@ -58,6 +60,3 @@ app.get('/', (req, res) => res.send('Backend is running successfully!'));
 })();
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
-
-
-//   { "name":"Admin", "email":"email@gmail.com", "password":"Admin", "contactNumber":"7249207830", "address":"Pune" } return corrected

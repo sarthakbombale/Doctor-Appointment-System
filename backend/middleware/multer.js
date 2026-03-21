@@ -2,14 +2,16 @@ const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 
-// Configure Cloudinary with your keys
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-console.log("Cloudinary Configured:", !!process.env.CLOUDINARY_NAME);
+// We wrap the config in a check to ensure variables exist
+if (process.env.CLOUDINARY_NAME) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+} else {
+  console.error("CRITICAL: Cloudinary environment variables are missing!");
+}
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
@@ -23,5 +25,4 @@ const storage = new CloudinaryStorage({
 });
 
 const upload = multer({ storage });
-
 module.exports = upload;
