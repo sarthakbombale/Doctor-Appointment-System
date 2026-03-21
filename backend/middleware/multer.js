@@ -1,29 +1,23 @@
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
-const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+// Configure Cloudinary with your keys
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "doctor_app_profiles", // This creates a specific folder in your Cloudinary account
+    allowed_formats: ["jpg", "jpeg", "png"],
+    public_id: (req, file) => `profile-${Date.now()}`, 
   },
 });
 
-// ✅ Correct file filter
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-
-  if (allowedTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only JPG, JPEG, PNG files are allowed"), false);
-  }
-};
-
-const upload = multer({
-  storage,
-  fileFilter,
-});
+const upload = multer({ storage });
 
 module.exports = upload;
