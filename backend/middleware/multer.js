@@ -13,10 +13,12 @@ console.log("Cloudinary Configured:", !!process.env.CLOUDINARY_NAME);
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: "doctor_app_profiles", // This creates a specific folder in your Cloudinary account
-    allowed_formats: ["jpg", "jpeg", "png"],
-    public_id: (req, file) => `profile-${Date.now()}`,
+  params: async (req, file) => {
+    return {
+      folder: "doctor_app_profiles",
+      allowed_formats: ["jpg", "jpeg", "png"],
+      public_id: `profile-${Date.now()}`,
+    };
   },
 });
 
