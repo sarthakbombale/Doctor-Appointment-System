@@ -9,12 +9,14 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+console.log("Cloudinary Configured:", !!process.env.CLOUDINARY_NAME);
+
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "doctor_app_profiles", // This creates a specific folder in your Cloudinary account
     allowed_formats: ["jpg", "jpeg", "png"],
-    public_id: (req, file) => `profile-${Date.now()}`, 
+    public_id: (req, file) => `profile-${Date.now()}`,
   },
 });
 

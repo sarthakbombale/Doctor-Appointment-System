@@ -8,7 +8,7 @@ const defaultAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 const register = async (req, res) => {
     const { name, email, contactNumber, address, gender } = req.body;
     let { password } = req.body;
-    
+
     // Cloudinary returns the full URL in req.file.path
     const imagePath = req.file ? req.file.path : defaultAvatar;
 
@@ -134,7 +134,7 @@ const updateUser = async (req, res) => {
         if (contactNumber !== undefined) user.contactNumber = contactNumber;
         if (address !== undefined) user.address = address;
         if (gender !== undefined) user.gender = gender;
-        
+
         // ✅ Ensure we save the path string, not the object
         if (req.file) {
             user.imagePath = req.file.path;
@@ -143,12 +143,12 @@ const updateUser = async (req, res) => {
         await user.save();
 
         // ✅ Final cleanup for the response object
-        const updatedUser = user.toJSON();
+        const updatedUser = user.get({ plain: true }); // Cleaner than toJSON()
         if (!updatedUser.imagePath || updatedUser.imagePath === "[object Object]") {
-            updatedUser.imagePath = defaultAvatar;
+            updatedUser.imagePath = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
         }
-
         res.status(200).json({ msg: "User updated successfully", user: updatedUser, success: true });
+
     } catch (error) {
         console.error("updateUser ERROR:", error);
         res.status(500).send({ msg: "Server Error", error: error.message });

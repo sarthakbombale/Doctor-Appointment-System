@@ -45,21 +45,29 @@ const Profile = () => {
     setLoading(true);
     try {
       const payload = new FormData();
-      Object.keys(formData).forEach(key => payload.append(key, formData[key]));
-      if (imageFile) payload.append("userImage", imageFile);
+      Object.keys(formData).forEach(key => {
+        if (formData[key]) payload.append(key, formData[key]);
+      });
+
+      if (imageFile) {
+        payload.append("userImage", imageFile);
+      }
 
       const res = await updateUser(payload);
       if (res.data.success) {
         toast.success("Profile updated!");
         setEditMode(false);
         fetchProfile();
+        setPreview(null); // Clear preview after success
       }
     } catch (error) {
-      toast.error("Update failed");
+      // Check if the error response has a message to avoid [object Object] popup
+      const message = error.response?.data?.msg || "Update failed";
+      toast.error(message);
     } finally {
       setLoading(false);
     }
-  };
+  };;
 
   if (!user) return (
     <div className="profile-loader"><Spinner animation="border" variant="primary" /><p>Syncing Data...</p></div>
