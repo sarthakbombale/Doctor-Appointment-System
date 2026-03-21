@@ -43,6 +43,8 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log("Starting Update...");
+
     try {
       const payload = new FormData();
       Object.keys(formData).forEach(key => {
@@ -54,20 +56,22 @@ const Profile = () => {
       }
 
       const res = await updateUser(payload);
+
       if (res.data.success) {
         toast.success("Profile updated!");
         setEditMode(false);
         fetchProfile();
-        setPreview(null); // Clear preview after success
+        setPreview(null);
+        setImageFile(null);
       }
     } catch (error) {
-      // Check if the error response has a message to avoid [object Object] popup
-      const message = error.response?.data?.msg || "Update failed";
-      toast.error(message);
+      const errorMsg = error.response?.data?.msg || error.message || "Update failed";
+      console.error("Frontend Error:", errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
-  };;
+  };
 
   if (!user) return (
     <div className="profile-loader"><Spinner animation="border" variant="primary" /><p>Syncing Data...</p></div>

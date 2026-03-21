@@ -72,13 +72,20 @@ const getUserInfo = async (req, res) => {
             attributes: ["id", "name", "email", "address", "contactNumber", "gender", "role", "imagePath"]
         });
 
-        // ✅ Clean up check for imagePath
-        if (!loggedUser.imagePath || loggedUser.imagePath === "[object Object]") {
-            loggedUser.imagePath = defaultAvatar;
+        if (!loggedUser) {
+            return res.status(404).json({ msg: "User not found", success: false });
         }
 
-        res.status(200).json({ user: loggedUser, success: true });
+        const userData = loggedUser.get({ plain: true });
+
+
+        if (!userData.imagePath || String(userData.imagePath).includes("[object")) {
+            userData.imagePath = defaultAvatar;
+        }
+
+        res.status(200).json({ user: userData, success: true });
     } catch (error) {
+        console.error("getUserInfo Error:", error);
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
 };
@@ -106,10 +113,11 @@ const userList = async (req, res) => {
             attributes: ["id", "name", "email", "contactNumber", "address", "gender", "imagePath"]
         });
 
-        // ✅ Clean up image paths for the list
+        // ✅ Clean up image paths for the list by mapping to plain objects
         const updatedUsers = users.map(user => {
-            const userData = user.toJSON();
-            if (!userData.imagePath || userData.imagePath === "[object Object]") {
+            const userData = user.get({ plain: true });
+
+            if (!userData.imagePath || String(userData.imagePath).includes("[object")) {
                 userData.imagePath = defaultAvatar;
             }
             return userData;
@@ -117,6 +125,7 @@ const userList = async (req, res) => {
 
         res.status(200).json({ users: updatedUsers, success: true });
     } catch (error) {
+        console.error("userList Error:", error);
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
 };

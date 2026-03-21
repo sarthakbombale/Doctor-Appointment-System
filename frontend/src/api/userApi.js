@@ -5,8 +5,10 @@ export const getUserInfo = () => {
   return axiosInstance.get("/user/getUserInfo");
 };
 
-export const updateUser = (data) => {
-  return axiosInstance.put("/user/updateUser", data);
+export const updateUser = (formData) => {
+  return axiosInstance.put("/user/updateUser", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
 
 export const getUserList = () => {
