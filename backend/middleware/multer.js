@@ -2,6 +2,7 @@ const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 
+// Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -14,7 +15,6 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "doctor_app_profiles",
     allowed_formats: ["jpg", "jpeg", "png"],
-    // Using a simpler public_id generator to avoid internal 'config' errors
     public_id: (req, file) => `profile-${Date.now()}`
   },
 });

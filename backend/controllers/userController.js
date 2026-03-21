@@ -144,29 +144,25 @@ const updateUser = async (req, res) => {
         if (address !== undefined) user.address = address;
         if (gender !== undefined) user.gender = gender;
 
-        // ✅ Ensure we save the path string, not the object
         if (req.file) {
-            user.imagePath = req.file.path;
+            user.imagePath = req.file.path; // Cloudinary URL
         }
 
         await user.save();
 
-        // ✅ Final cleanup for the response object
-        const updatedUser = user.get({ plain: true }); // Cleaner than toJSON()
-        if (!updatedUser.imagePath || updatedUser.imagePath === "[object Object]") {
+        const updatedUser = user.get({ plain: true });
+
+        // Final cleanup for broken strings
+        if (!updatedUser.imagePath || String(updatedUser.imagePath).includes("[object")) {
             updatedUser.imagePath = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
         }
+
         res.status(200).json({ msg: "User updated successfully", user: updatedUser, success: true });
 
     } catch (error) {
         console.error("updateUser ERROR:", error);
-        // Explicitly send error.message so the frontend sees "config is not defined" 
-        // instead of an empty alert or [object Object]
-        res.status(500).json({ 
-            success: false, 
-            msg: error.message || "Server Error", 
-            error: error.message 
-        });
+        // Send error.message to avoid [object Object] popup
+        res.status(500).json({ success: false, msg: error.message || "Server Error" });
     }
 };
 
