@@ -74,9 +74,12 @@ const Profile = () => {
         <Card.Body className="pt-0">
           <div className="profile-top-section">
             <div className="avatar-container">
-              <Image 
-                src={preview || user.imagePath || "https://via.placeholder.com/150"} 
+              <Image
+                // If no preview and no imagePath, show the default avatar
+                src={preview || user.imagePath || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
                 className="main-avatar shadow"
+                // If the URL is broken (404), this forces the default avatar
+                onError={(e) => { e.target.src = "https://cdn-icons-png.flaticon.com/512/149/149071.png" }}
               />
               {editMode && (
                 <label className="avatar-edit-badge">
@@ -85,7 +88,7 @@ const Profile = () => {
                 </label>
               )}
             </div>
-            
+
             <div className="profile-intro mt-3">
               <h3 className="fw-bold m-0">{user.name}</h3>
               <Badge bg="soft-primary" className="role-badge mt-1">{user.role}</Badge>
@@ -121,18 +124,18 @@ const Profile = () => {
                 </Col>
               </Row>
               <div className="d-flex gap-2 justify-content-end mb-3">
-                <Button variant="light" onClick={() => setEditMode(false)} className="px-4"><X size={18} className="me-1"/> Cancel</Button>
-                <Button type="submit" disabled={loading} className="btn-save px-4"><Save size={18} className="me-1"/> {loading ? "Saving..." : "Save Changes"}</Button>
+                <Button variant="light" onClick={() => setEditMode(false)} className="px-4"><X size={18} className="me-1" /> Cancel</Button>
+                <Button type="submit" disabled={loading} className="btn-save px-4"><Save size={18} className="me-1" /> {loading ? "Saving..." : "Save Changes"}</Button>
               </div>
             </Form>
           ) : (
             /* VIEW MODE DETAILS */
             <div className="profile-details px-md-4">
               <Row className="g-4">
-                <DetailItem icon={<Mail size={20}/>} label="Email Address" value={user.email} />
-                <DetailItem icon={<Phone size={20}/>} label="Phone" value={user.contactNumber || "Not Provided"} />
-                <DetailItem icon={<MapPin size={20}/>} label="Location" value={user.address || "Not Provided"} />
-                <DetailItem icon={<User size={20}/>} label="Gender" value={user.gender || "Not Provided"} />
+                <DetailItem icon={<Mail size={20} />} label="Email Address" value={user.email} />
+                <DetailItem icon={<Phone size={20} />} label="Phone" value={user.contactNumber || "Not Provided"} />
+                <DetailItem icon={<MapPin size={20} />} label="Location" value={user.address || "Not Provided"} />
+                <DetailItem icon={<User size={20} />} label="Gender" value={user.gender || "Not Provided"} />
               </Row>
               <div className="text-center mt-5 mb-3">
                 <Button onClick={() => setEditMode(true)} className="btn-edit-profile px-5 rounded-pill">

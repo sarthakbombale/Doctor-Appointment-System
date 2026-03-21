@@ -3,20 +3,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// BASEURL is no longer needed as Cloudinary provides absolute URLs (https://...)
+const defaultAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
 const register = async (req, res) => {
     const { name, email, contactNumber, address, gender } = req.body;
     let { password } = req.body;
     
-    // ✅ Use req.file.path for Cloudinary URL
-    const imagePath = req.file ? req.file.path : null;
+    // Cloudinary returns the full URL in req.file.path
+    const imagePath = req.file ? req.file.path : defaultAvatar;
 
     try {
-        const exisitingUser = await User.findOne({
-            where: { email: email }
-        });
-
+        const exisitingUser = await User.findOne({ where: { email: email } });
         if (exisitingUser) {
             return res.status(400).send({ msg: "User already exists", success: false });
         }
@@ -34,12 +31,7 @@ const register = async (req, res) => {
             imagePath
         });
 
-        if (!regUser) {
-            return res.status(400).send({ msg: "Not registered", success: false });
-        }
-
         res.status(201).json({ msg: "Register successfully", success: true });
-
     } catch (error) {
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
@@ -47,16 +39,12 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-
     if (!email || !password) {
         return res.status(400).send({ msg: "Email and password are required", success: false });
     }
 
     try {
-        const loggedUser = await User.findOne({
-            where: { email: email }
-        });
-
+        const loggedUser = await User.findOne({ where: { email: email } });
         if (!loggedUser) {
             return res.status(400).send({ msg: "User not found", success: false });
         }
@@ -72,9 +60,7 @@ const login = async (req, res) => {
                 token
             });
         }
-
         return res.status(400).send({ msg: "Password incorrect", success: false });
-
     } catch (error) {
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
@@ -82,12 +68,15 @@ const login = async (req, res) => {
 
 const getUserInfo = async (req, res) => {
     try {
-        const loggedUser = await User.findByPk(
-            req.user.id, {
+        const loggedUser = await User.findByPk(req.user.id, {
             attributes: ["id", "name", "email", "address", "contactNumber", "gender", "role", "imagePath"]
         });
-        
-        // ✅ No need to append BASEURL; the database now stores the full Cloudinary link
+
+        // ✅ Clean up check for imagePath
+        if (!loggedUser.imagePath || loggedUser.imagePath === "[object Object]") {
+            loggedUser.imagePath = defaultAvatar;
+        }
+
         res.status(200).json({ user: loggedUser, success: true });
     } catch (error) {
         res.status(500).send({ msg: "Server Error", error: error.message });
@@ -98,24 +87,15 @@ const doctorList = async (req, res) => {
     try {
         const doctors = await Doctor.findAll({
             where: { status: "Accepted" },
-            include: [
-                {
-                    model: User,
-                    as: "user",
-                    attributes: ["id", "name", "gender"],
-                },
-            ],
+            include: [{
+                model: User,
+                as: "user",
+                attributes: ["id", "name", "gender"],
+            }],
         });
-
-        res.status(200).json({
-            success: true,
-            doctors,
-        });
+        res.status(200).json({ success: true, doctors });
     } catch (error) {
-        res.status(500).send({
-            msg: "Server Error",
-            error: error.message,
-        });
+        res.status(500).send({ msg: "Server Error", error: error.message });
     }
 };
 
@@ -123,19 +103,19 @@ const userList = async (req, res) => {
     try {
         const users = await User.findAll({
             where: { role: 'User' },
-            attributes: [
-                "id",
-                "name",
-                "email",
-                "contactNumber",
-                "address",
-                "gender",
-                "imagePath"
-            ]
+            attributes: ["id", "name", "email", "contactNumber", "address", "gender", "imagePath"]
         });
 
-        // ✅ Removed the .forEach loop that was appending local BASEURL
-        res.status(200).json({ users: users, success: true });
+        // ✅ Clean up image paths for the list
+        const updatedUsers = users.map(user => {
+            const userData = user.toJSON();
+            if (!userData.imagePath || userData.imagePath === "[object Object]") {
+                userData.imagePath = defaultAvatar;
+            }
+            return userData;
+        });
+
+        res.status(200).json({ users: updatedUsers, success: true });
     } catch (error) {
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
@@ -155,12 +135,20 @@ const updateUser = async (req, res) => {
         if (address !== undefined) user.address = address;
         if (gender !== undefined) user.gender = gender;
         
-        // ✅ Update with Cloudinary URL from .path
-        if (req.file) user.imagePath = req.file.path;
+        // ✅ Ensure we save the path string, not the object
+        if (req.file) {
+            user.imagePath = req.file.path;
+        }
 
         await user.save();
 
-        res.status(200).json({ msg: "User updated successfully", user, success: true });
+        // ✅ Final cleanup for the response object
+        const updatedUser = user.toJSON();
+        if (!updatedUser.imagePath || updatedUser.imagePath === "[object Object]") {
+            updatedUser.imagePath = defaultAvatar;
+        }
+
+        res.status(200).json({ msg: "User updated successfully", user: updatedUser, success: true });
     } catch (error) {
         console.error("updateUser ERROR:", error);
         res.status(500).send({ msg: "Server Error", error: error.message });

@@ -35,7 +35,8 @@ const User = sequelize.define("User", {
         defaultValue: 'User'
     },
     imagePath: {
-        type: DataTypes.STRING
+        type: DataTypes.TEXT, // This allows much longer URLs
+        allowNull: true
     },
     doctorApproved: {
         type: DataTypes.BOOLEAN,
