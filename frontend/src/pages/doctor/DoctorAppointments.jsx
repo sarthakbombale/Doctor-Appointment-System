@@ -120,7 +120,7 @@ const DocMyAppointments = () => {
                               className="action-btn"
                               onClick={() => updateStatus(appt.id, "Accepted")}
                             >
-                              <Check size={14} className="me-1" /> Accept
+                              <Check size={14} className="me-1" />
                             </Button>
                             <Button
                               variant="outline-danger"
@@ -128,7 +128,7 @@ const DocMyAppointments = () => {
                               className="action-btn"
                               onClick={() => updateStatus(appt.id, "Rejected")}
                             >
-                              <X size={14} className="me-1" /> Reject
+                              <X size={14} className="me-1" />
                             </Button>
                           </>
                         )}
@@ -143,7 +143,7 @@ const DocMyAppointments = () => {
                             <CheckCircle size={14} className="me-1" /> Mark Done
                           </Button>
                         )}
-                        
+
                         {(appt.status === "Completed" || appt.status === "Rejected") && (
                           <span className="text-muted x-small italic">No actions</span>
                         )}
