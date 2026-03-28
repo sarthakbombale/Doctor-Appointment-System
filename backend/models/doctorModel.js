@@ -38,7 +38,7 @@ const Doctor = sequelize.define(
     type: DataTypes.ENUM(
       'Pending',
       'Accepted',
-      'Reject'
+      'Rejected'
     ),
     defaultValue: 'Pending'
   },

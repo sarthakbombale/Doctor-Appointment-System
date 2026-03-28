@@ -31,7 +31,7 @@ const docStatus = async (req, res) => {
     const { DoctorID } = req.params;
     const { status } = req.body;
 
-    const allowedStatus = ["Pending", "Accepted", "Reject"];
+    const allowedStatus = ["Pending", "Accepted", "Rejected"];
     if (!allowedStatus.includes(status)) {
       return res.status(400).send({ msg: "Invalid status value", success: false });
     }
@@ -57,7 +57,7 @@ const docStatus = async (req, res) => {
       );
     }
 
-    if (status === "Reject") {
+    if (status === "Rejected") {
       await User.update(
         {
           role: "User",

@@ -36,7 +36,7 @@ const Appointment = sequelize.define('Appointment', {
       'Pending',
       'Accepted',
       'Completed',
-      'Reject'
+      'Rejected'
     ),
     defaultValue: 'Pending'
   },

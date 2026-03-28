@@ -7,11 +7,11 @@ const router = express.Router()
 
 router.post('/createAppoint',auth, appointmentController.createAppointment)
 
-router.patch('/statusUpdateByDoctor/:ID',auth, doctor, appointmentController.statusUpdateByDoctor)
+router.patch('/statusUpdateByDoctor/:id',auth, doctor, appointmentController.statusUpdateByDoctor)
 
-router.put('/updateAppoint/:ID', auth ,appointmentController.updateAppointment )
+router.put('/updateAppoint/:id', auth ,appointmentController.updateAppointment )
 
-router.delete('/deleteAppoint/:ID', auth, appointmentController.deleteAppointment)
+router.delete('/deleteAppoint/:id', auth, appointmentController.deleteAppointment)
 
 router.get('/getAppointmentsByUser', auth, appointmentController.getAppointmentsByUser)
 

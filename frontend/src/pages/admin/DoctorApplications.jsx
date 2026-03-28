@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Table, Card, Button, Badge, Container, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { CheckCircle, XCircle, Clock, User, Mail, IndianRupee } from "lucide-react";
-import { updateDoctorStatus } from "../../api/doctorApi.js";
+import { updateDoctorStatus } from "../../api/doctorAPI.js";
 import axiosInstance from "../../api/axiosInstance.js";
 import "../../styles/DoctorApplications.css";
 
