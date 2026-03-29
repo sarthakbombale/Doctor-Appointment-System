@@ -30,6 +30,10 @@ const DoctorApplications = () => {
       const res = await updateDoctorStatus(doctorId, status);
       if (res.data.success) {
         toast.success(res.data.msg || `Application ${status}`);
+
+        if (status === "Accepted") {
+          toast.info("Please logout and login again for the doctor to access their dashboard.");
+        }
         fetchApplications();
       }
     } catch (error) {

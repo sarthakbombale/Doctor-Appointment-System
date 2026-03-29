@@ -28,25 +28,31 @@ const applyDoctor = async (req, res) => {
 /* ================= UPDATE DOCTOR STATUS (ADMIN) ================= */
 const docStatus = async (req, res) => {
   try {
-    const { DoctorID } = req.params;
+    const doctorid = req.params.doctorid;
     const { status } = req.body;
+
+    console.log("Updating doctor status - doctorid:", doctorid, "status:", status, "admin id:", req.user.id, "admin role:", req.user.role);
 
     const allowedStatus = ["Pending", "Accepted", "Rejected"];
     if (!allowedStatus.includes(status)) {
       return res.status(400).send({ msg: "Invalid status value", success: false });
     }
 
-    const doctor = await Doctor.findByPk(DoctorID);
+    const doctor = await Doctor.findByPk(doctorid);
     if (!doctor) {
       return res.status(404).send({ msg: "Doctor not found", success: false });
     }
+
+    console.log("Found doctor:", doctor.id, "createdBy:", doctor.createdBy, "status:", doctor.status);
 
     doctor.status = status;
     doctor.updatedBy = req.user.id;
     await doctor.save();
 
+    console.log("Doctor status updated to:", status, "for doctor id:", doctorid, "createdBy:", doctor.createdBy);
+
     if (status === "Accepted") {
-      await User.update(
+      const [userUpdated] = await User.update(
         {
           role: "Doctor",
           doctorApproved: true
@@ -55,10 +61,11 @@ const docStatus = async (req, res) => {
           where: { id: doctor.createdBy }
         }
       );
+      console.log("User role updated, rows affected:", userUpdated);
     }
 
     if (status === "Rejected") {
-      await User.update(
+      const [userUpdated] = await User.update(
         {
           role: "User",
           doctorApproved: false
@@ -67,6 +74,7 @@ const docStatus = async (req, res) => {
           where: { id: doctor.createdBy }
         }
       );
+      console.log("User role updated to User, rows affected:", userUpdated);
     }
 
     res.status(200).send({

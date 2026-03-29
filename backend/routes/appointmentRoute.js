@@ -1,8 +1,9 @@
 const express = require('express')
+const router = express.Router();
 const appointmentController = require('../controllers/appointmentController.js')
 const { auth, doctor,admin } = require('../middleware/auth.js')
 
-const router = express.Router()
+
 
 
 router.post('/createAppoint',auth, appointmentController.createAppointment)

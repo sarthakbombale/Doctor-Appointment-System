@@ -4,11 +4,10 @@ export const createAppointment = (data) => {
   return axiosInstance.post("/appointment/createAppoint", data);
 };
 
+
 export const updateAppointmentStatusByDoctor = (id, data) => {
-  return axiosInstance.patch(
-    `/appointment/statusUpdateByDoctor/${id}`,
-    data
-  );
+  // Use PATCH to match the backend route
+  return axiosInstance.patch(`/appointment/statusUpdateByDoctor/${id}`, data);
 };
 
 export const updateAppointment = (id, data) => {

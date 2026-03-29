@@ -43,45 +43,45 @@ async function createAppointment(req, res) {
 }
 
 
-
-// ================= STATUS UPDATE BY DOCTOR =================import { updateDoctorStatus } from "../../api/doctorAPI.js";
-// ...existing code...import { updateDoctorStatus } from "../../api/doctorAPI.js";
-// ...existing code...import { updateDoctorStatus } from "../../api/doctorAPI.js";
-// ...existing code...
+// ================= STATUS UPDATE BY DOCTOR ================
 async function statusUpdateByDoctor(req, res) {
-  const { id } = req.params; // Use lowercase 'id'
+  const { id } = req.params;
   const { status } = req.body;
 
-  // Change "Reject" to "Rejected" in this list
-  const allowedStatus = ["Pending", "Accepted", "Rejected", "Completed"];
+  console.log("Updating appointment - id:", id, "status:", status, "user id:", req.user.id, "user role:", req.user.role);
 
+  // Validate status
+  const allowedStatus = ["Pending", "Accepted", "Rejected", "Completed"];
   if (!allowedStatus.includes(status)) {
-    return res.status(400).send({
-      msg: `Invalid status. Received: ${status}`,
+    return res.status(400).json({
       success: false,
+      msg: `Invalid status. Allowed: ${allowedStatus.join(", ")}`
     });
   }
 
   try {
+    // Update only if the appointment belongs to this doctor
     const [rowsUpdated] = await Appointment.update(
-      { 
-        status: status, 
-        updatedBy: req.user.id 
-      },
-      { where: { id: id } } // Ensure 'id' matches the model PK
+      { status, updatedBy: req.user.id },
+      { where: { id: Number(id), doctorId: req.user.id } }
     );
 
+    console.log("Appointment update result - rowsUpdated:", rowsUpdated);
+
     if (rowsUpdated === 0) {
-      return res.status(404).send({ msg: "No changes made", success: false });
+      return res.status(404).json({
+        success: false,
+        msg: "Appointment not found, not authorized, or status unchanged"
+      });
     }
 
-    return res.status(200).send({
-      msg: `Appointment is now ${status}`,
+    return res.status(200).json({
       success: true,
+      msg: `Appointment marked as ${status}`
     });
   } catch (error) {
-    console.error("Update Error:", error.message);
-    res.status(500).send({ msg: "Server Error", error: error.message });
+    console.error("DB UPDATE ERROR:", error.message);
+    return res.status(500).json({ success: false, msg: "Server error: " + error.message });
   }
 }
 
@@ -94,7 +94,7 @@ function updateAppointment(req, res) {
 
     Appointment.update(
       { dateTime },
-      { where: { id } }
+      { where: { id: parseInt(id) } }
     )
       .then((result) => {
         if (result[0] > 0) {
@@ -129,7 +129,7 @@ function deleteAppointment(req, res) {
     const { id } = req.params;
 
     Appointment.destroy({
-      where: { id },
+      where: { id: parseInt(id) },
     })
       .then((result) => {
         if (result > 0) {
