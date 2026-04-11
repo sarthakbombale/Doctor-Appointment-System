@@ -28,12 +28,19 @@ const Login = () => {
 
         toast.success("Welcome back!");
 
-        if (decoded.role === "Admin") navigate("/admin/dashboard");
-        else if (decoded.role === "Doctor") navigate("/doctor/dashboard");
+        const userRole = decoded.role?.toLowerCase();
+        if (userRole === "admin") navigate("/admin/dashboard");
+        else if (userRole === "doctor") navigate("/doctor/dashboard");
         else navigate("/user/dashboard");
       }
     } catch (error) {
-      toast.error(error.response?.data?.msg || "Login failed");
+      console.error("Login error:", error);
+      toast.error(
+        error.response?.data?.msg ||
+          error.response?.data?.message ||
+          error.message ||
+          "Login failed"
+      );
     } finally {
       setLoading(false);
     }

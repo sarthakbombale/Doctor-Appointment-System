@@ -29,7 +29,8 @@ const MyAppointments = () => {
       if (apptRes.data.success) setAppointments(apptRes.data.appointments || []);
       if (docRes.data.success) setDoctors(docRes.data.doctors || []);
     } catch (error) {
-      toast.error("Failed to load data");
+      console.error("Load appointments error:", error);
+      toast.error(error.response?.data?.msg || error.message || "Failed to load data");
     } finally {
       setLoading(false);
     }
@@ -53,7 +54,10 @@ const MyAppointments = () => {
         setShow(false);
         fetchData();
       }
-    } catch { toast.error("Update failed"); }
+    } catch (error) {
+      console.error("Update appointment error:", error);
+      toast.error(error.response?.data?.msg || error.message || "Update failed");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -64,7 +68,10 @@ const MyAppointments = () => {
         toast.success("Appointment cancelled");
         fetchData();
       }
-    } catch { toast.error("Cancellation failed"); }
+    } catch (error) {
+      console.error("Cancel appointment error:", error);
+      toast.error(error.response?.data?.msg || error.message || "Cancellation failed");
+    }
   };
 
   const getStatusBadge = (status) => {

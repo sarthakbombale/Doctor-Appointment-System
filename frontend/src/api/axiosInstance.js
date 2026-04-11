@@ -29,17 +29,24 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Log the actual response object to see real server messages
-    console.error("API Error Detailed:", {
+    const details = {
       status: error.response?.status,
       data: error.response?.data,
-      message: error.response?.data?.message || error.message,
-      url: config?.url,
-    });
+      message: error.response?.data?.msg || error.response?.data?.message || error.message,
+      url: error.config?.url,
+    };
+
+    if (error.response) {
+      console.error("API Error Detailed:", details);
+    } else if (error.request) {
+      console.error("API Error: No response received", details);
+    } else {
+      console.error("API Error: Request setup failed", details);
+    }
 
     if (error.response?.status === 401) {
       localStorage.removeItem("token6163");
-      // Optional: window.location.href = "/login";
+      window.location.href = "/login";
     }
 
     return Promise.reject(error);

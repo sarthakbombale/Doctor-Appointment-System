@@ -18,7 +18,10 @@ try {
     params: {
       folder: "doctor_app_profiles",
       allowed_formats: ["jpg", "jpeg", "png"],
-      public_id: (req, file) => `profile-${Date.now()}`
+      resource_type: "auto", // Automatically detects image type
+      // public_id should be a function that returns a string
+      public_id: (req, file) => `profile-${Date.now()}-${Math.round(Math.random() * 1E9)}`,
+
     },
   });
 } catch (err) {

@@ -33,12 +33,16 @@ function auth(req, res, next) {
 }
 
 function doctor(req, res, next) {
-  if (req.user?.role?.toLowerCase() === "doctor") {
+  // Defensive check: ensure req.user exists and has a role
+  const userRole = req.user?.role?.toLowerCase();
+
+  if (userRole === "doctor") {
     return next();
   }
+
   return res.status(403).json({
     success: false,
-    msg: "Doctor access required",
+    msg: `Access Denied. Expected Doctor, but you are: ${req.user?.role || "Unknown"}`,
   });
 }
 

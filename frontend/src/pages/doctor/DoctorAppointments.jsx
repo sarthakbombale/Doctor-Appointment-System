@@ -30,16 +30,19 @@ const DocMyAppointments = () => {
     fetchAppointments();
   }, []);
 
-  const updateStatus = async (id, status) => {
+  // frontend/src/pages/DocMyAppointments.jsx
+  const updateStatus = async (id, statusValue) => {
     try {
-      // Ensure 'status' matches the backend's allowedStatus: ["Pending", "Accepted", "Rejected", "Completed"]
-      const res = await updateAppointmentStatusByDoctor(id, { status });
+      // WRONG: await updateAppointmentStatusByDoctor(id, statusValue); 
+      // RIGHT: Wrap it in an object so req.body.status exists
+      const res = await updateAppointmentStatusByDoctor(id, { status: statusValue });
+
       if (res.data.success) {
         toast.success(res.data.msg);
         fetchAppointments();
       }
     } catch (error) {
-      toast.error(error.response?.data?.msg || "Failed to update appointment status");
+      toast.error(error.response?.data?.msg || "Update failed");
     }
   };
 
@@ -160,9 +163,10 @@ const DocMyAppointments = () => {
               )}
             </tbody>
           </Table>
+          <></>
         </Card.Body>
       </Card>
-    </Container>
+    </Container >
   );
 };
 

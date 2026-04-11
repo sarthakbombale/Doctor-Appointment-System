@@ -25,8 +25,9 @@ const Profile = () => {
           gender: res.data.user.gender || "",
         });
       }
-    } catch {
-      toast.error("Failed to load profile");
+    } catch (error) {
+      console.error("Fetch profile error:", error);
+      toast.error(error.response?.data?.msg || error.message || "Failed to load profile");
     }
   };
 

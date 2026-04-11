@@ -1,6 +1,4 @@
-const Appointment = require('../models/appointmentModel.js');
-const User = require('../models/userModel.js');
-
+const { Appointment, User } = require('../models/index');
 
 // ================= CREATE APPOINTMENT =================
 async function createAppointment(req, res) {
@@ -48,40 +46,46 @@ async function statusUpdateByDoctor(req, res) {
   const { id } = req.params;
   const { status } = req.body;
 
-  console.log("Updating appointment - id:", id, "status:", status, "user id:", req.user.id, "user role:", req.user.role);
+  // 1. Force everything to Numbers (BIGINT UNSIGNED safety)
+  const appointmentId = Number(id);
+  const doctorUserId = Number(req.user.id);
 
-  // Validate status
-  const allowedStatus = ["Pending", "Accepted", "Rejected", "Completed"];
-  if (!allowedStatus.includes(status)) {
-    return res.status(400).json({
-      success: false,
-      msg: `Invalid status. Allowed: ${allowedStatus.join(", ")}`
-    });
-  }
+  console.log(`Attempting update: Appt ${appointmentId} by Doctor ${doctorUserId} to ${status}`);
 
   try {
-    // Update only if the appointment belongs to this doctor
     const [rowsUpdated] = await Appointment.update(
-      { status, updatedBy: req.user.id },
-      { where: { id: Number(id), doctorId: req.user.id } }
+      {
+        status: status,
+        updatedBy: doctorUserId 
+      },
+      {
+        where: {
+          id: appointmentId,
+          doctorId: doctorUserId // Ownership check: Must be the doctor assigned
+        }
+      }
     );
 
-    console.log("Appointment update result - rowsUpdated:", rowsUpdated);
-
     if (rowsUpdated === 0) {
+      // If we reach here, the SQL ran but nothing changed
       return res.status(404).json({
         success: false,
-        msg: "Appointment not found, not authorized, or status unchanged"
+        msg: "Update failed: Either the appointment doesn't exist or you aren't the assigned doctor."
       });
     }
 
-    return res.status(200).json({
-      success: true,
-      msg: `Appointment marked as ${status}`
+    return res.status(200).json({ 
+      success: true, 
+      msg: `Status changed to ${status}` 
     });
+
   } catch (error) {
-    console.error("DB UPDATE ERROR:", error.message);
-    return res.status(500).json({ success: false, msg: "Server error: " + error.message });
+    // This will catch DB ENUM errors or Foreign Key failures
+    console.error("DATABASE UPDATE ERROR:", error.message);
+    return res.status(500).json({ 
+      success: false, 
+      msg: "Database Error: " + error.message 
+    });
   }
 }
 

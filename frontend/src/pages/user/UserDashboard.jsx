@@ -26,8 +26,9 @@ const UserDashboard = () => {
             completed: res.data.data.completed || 0,
           });
         }
-      } catch {
-        toast.error("Failed to load dashboard data");
+      } catch (error) {
+        console.error("User dashboard error:", error);
+        toast.error(error.response?.data?.msg || error.message || "Failed to load dashboard data");
       }
     };
     fetchDashboardData();

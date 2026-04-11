@@ -19,8 +19,9 @@ const AdminDashboard = () => {
         if (res.data.success) {
           setStats(res.data.data || { totalUsers: 0, totalDoctors: 0, totalAppointments: 0 });
         }
-      } catch {
-        toast.error("Failed to load dashboard data");
+      } catch (error) {
+        console.error("Admin dashboard error:", error);
+        toast.error(error.response?.data?.msg || error.message || "Failed to load dashboard data");
       }
     };
     fetchDashboardData();

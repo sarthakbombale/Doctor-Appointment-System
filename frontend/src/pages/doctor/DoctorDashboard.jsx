@@ -18,8 +18,9 @@ const DoctorDashboard = () => {
         if (res.data.success) {
           setStats(res.data.data || { totalAppointments: 0, totalPatients: 0 });
         }
-      } catch {
-        toast.error("Failed to load doctor dashboard");
+      } catch (error) {
+        console.error("Doctor dashboard error:", error);
+        toast.error(error.response?.data?.msg || error.message || "Failed to load doctor dashboard");
       }
     };
     fetchDashboardData();

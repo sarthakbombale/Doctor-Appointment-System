@@ -39,29 +39,47 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
+    
     if (!email || !password) {
         return res.status(400).send({ msg: "Email and password are required", success: false });
     }
 
     try {
+        // Find user by email
         const loggedUser = await User.findOne({ where: { email: email } });
+        
         if (!loggedUser) {
             return res.status(400).send({ msg: "User not found", success: false });
         }
 
-        if (await bcrypt.compare(password, loggedUser.password)) {
-            const payload = { id: loggedUser.id, role: loggedUser.role };
+        // Compare Password
+        const isMatch = await bcrypt.compare(password, loggedUser.password);
+        if (isMatch) {
+            // Ensure ID is cast to a number for the payload
+            const payload = { 
+                id: Number(loggedUser.id), 
+                role: loggedUser.role 
+            };
+            
             const secret = process.env.SECRET_KEY;
             const token = jwt.sign(payload, secret, { expiresIn: '1d' });
 
             return res.status(200).send({
                 msg: "Logged in successfully",
                 success: true,
-                token
+                token,
+                user: {
+                    id: loggedUser.id,
+                    name: loggedUser.name,
+                    role: loggedUser.role
+                }
             });
         }
+        
         return res.status(400).send({ msg: "Password incorrect", success: false });
+
     } catch (error) {
+        console.error("LOGIN ERROR:", error);
         res.status(500).send({ msg: "Server Error", error: error.message });
     }
 };
