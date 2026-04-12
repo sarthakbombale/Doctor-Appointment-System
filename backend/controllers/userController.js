@@ -7,11 +7,33 @@ require('dotenv').config();
 const defaultAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 const backendUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 7005}`;
 
+const normalizeCloudinaryUrl = (value) => {
+    if (!value) return null;
+    if (typeof value === 'string' && value.trim()) return value.trim();
+    if (typeof value === 'object') {
+        const keys = ['secure_url', 'url', 'location', 'path'];
+        for (const key of keys) {
+            if (typeof value[key] === 'string' && value[key].trim()) {
+                return value[key].trim();
+            }
+        }
+    }
+    return null;
+};
+
 const getFilePath = (file) => {
     if (!file) return null;
-    if (typeof file.location === 'string') return file.location;
-    if (file.path && typeof file.path.url === 'string') return file.path.url;
-    if (file.path && typeof file.path.secure_url === 'string') return file.path.secure_url;
+
+    // Common Cloudinary/Multer output fields
+    const locationUrl = normalizeCloudinaryUrl(file.location)
+        || normalizeCloudinaryUrl(file.secure_url)
+        || normalizeCloudinaryUrl(file.url)
+        || normalizeCloudinaryUrl(file.path)
+        || normalizeCloudinaryUrl(file);
+
+    if (locationUrl && locationUrl.startsWith('http')) {
+        return locationUrl;
+    }
 
     if (typeof file.path === 'string') {
         const normalized = file.path.replace(/\\/g, '/');
