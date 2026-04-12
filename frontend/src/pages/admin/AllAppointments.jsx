@@ -16,6 +16,7 @@ const AllAppointments = () => {
         setAppointments(res.data.appointments || []);
       }
     } catch (error) {
+      console.error(error);
       toast.error("Failed to fetch appointments");
     } finally {
       setLoading(false);

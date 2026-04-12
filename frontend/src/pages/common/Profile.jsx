@@ -35,6 +35,17 @@ const Profile = () => {
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const resetForm = () => {
+    setFormData({
+      name: user.name || "",
+      address: user.address || "",
+      contactNumber: user.contactNumber || "",
+      gender: user.gender || "",
+    });
+    setImageFile(null);
+    setPreview(null);
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
@@ -43,6 +54,7 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     console.log("Starting Update...");
 
@@ -137,7 +149,7 @@ const Profile = () => {
                 </Col>
               </Row>
               <div className="d-flex gap-2 justify-content-end mb-3">
-                <Button variant="light" onClick={() => setEditMode(false)} className="px-4"><X size={18} className="me-1" /> Cancel</Button>
+                <Button variant="light" onClick={() => { resetForm(); setEditMode(false); }} disabled={loading} className="px-4"><X size={18} className="me-1" /> Cancel</Button>
                 <Button type="submit" disabled={loading} className="btn-save px-4"><Save size={18} className="me-1" /> {loading ? "Saving..." : "Save Changes"}</Button>
               </div>
             </Form>

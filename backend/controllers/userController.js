@@ -1,16 +1,32 @@
+const path = require('path');
 const User = require('../models/userModel.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const defaultAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+const backendUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 7005}`;
+
+const getFilePath = (file) => {
+    if (!file) return null;
+    if (typeof file.location === 'string') return file.location;
+    if (file.path && typeof file.path.url === 'string') return file.path.url;
+    if (file.path && typeof file.path.secure_url === 'string') return file.path.secure_url;
+
+    if (typeof file.path === 'string') {
+        const normalized = file.path.replace(/\\/g, '/');
+        const fileName = path.basename(normalized);
+        return `${backendUrl}/uploads/${fileName}`;
+    }
+
+    return null;
+};
 
 const register = async (req, res) => {
     const { name, email, contactNumber, address, gender } = req.body;
     let { password } = req.body;
 
-    // Cloudinary returns the full URL in req.file.path
-    const imagePath = req.file ? req.file.path : defaultAvatar;
+    const imagePath = getFilePath(req.file) || defaultAvatar;
 
     try {
         const exisitingUser = await User.findOne({ where: { email: email } });
@@ -163,7 +179,10 @@ const updateUser = async (req, res) => {
         if (gender !== undefined) user.gender = gender;
 
         if (req.file) {
-            user.imagePath = req.file.path; // Cloudinary URL
+            const newImagePath = getFilePath(req.file);
+            if (newImagePath) {
+                user.imagePath = newImagePath;
+            }
         }
 
         await user.save();

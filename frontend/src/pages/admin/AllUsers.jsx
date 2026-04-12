@@ -17,6 +17,7 @@ const AllUsers = () => {
         setUsers(res.data.users || []);
       }
     } catch (error) {
+      console.error(error);
       toast.error("Failed to fetch users");
     } finally {
       setLoading(false);

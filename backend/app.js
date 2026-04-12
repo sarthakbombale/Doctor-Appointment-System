@@ -51,6 +51,24 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/', (req, res) => res.send('Backend is running successfully!'));
 
+// Generic JSON error handler for multer/cloudinary/abort errors
+app.use((err, req, res, next) => {
+  console.error("Express Error:", err);
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  const status = err.status || err.statusCode || 500;
+  const message = err.message || err.msg || "Server Error";
+  const errorPayload = typeof err === 'object' ? { ...err } : err;
+
+  return res.status(status).json({
+    success: false,
+    msg: message,
+    error: errorPayload,
+  });
+});
+
 (async () => {
   await testConnection();
   await syncDB();

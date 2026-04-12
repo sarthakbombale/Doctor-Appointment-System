@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Table, Card, Button, Badge, Container, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { CheckCircle, XCircle, Clock, User, Mail, IndianRupee } from "lucide-react";
-import { updateDoctorStatus } from "../../api/doctorAPI.js";
+import { updateDoctorStatus } from "../../api/doctorApi.js";
 import axiosInstance from "../../api/axiosInstance.js";
 import "../../styles/DoctorApplications.css";
 
@@ -18,6 +18,7 @@ const DoctorApplications = () => {
         setApplications(res.data.data || []);
       }
     } catch (error) {
+      console.error(error);
       toast.error("Failed to fetch applications");
     } finally {
       setLoading(false);
@@ -37,6 +38,7 @@ const DoctorApplications = () => {
         fetchApplications();
       }
     } catch (error) {
+      console.error(error);
       toast.error("Failed to update status");
     } finally {
       setActionId(null);
@@ -54,7 +56,7 @@ const DoctorApplications = () => {
       Rejected: { bg: "danger-subtle", text: "danger-emphasis", icon: <XCircle size={12} /> },
     };
     const config = configs[status] || { bg: "secondary", text: "white", icon: null };
-    
+
     return (
       <Badge bg={config.bg} className={`${config.text} border d-inline-flex align-items-center gap-1 px-2 py-1`}>
         {config.icon} {status}
