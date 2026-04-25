@@ -49,6 +49,10 @@ const BookAppointment = () => {
     }
   };
 
+  // Calculate current date and time for the 'min' attribute
+  const today = new Date();
+  const minDateTime = today.toISOString().slice(0, 16);
+
   return (
     <Container className="py-5">
       <div className="booking-header mb-5">
@@ -66,18 +70,18 @@ const BookAppointment = () => {
                   <span className="step-number">1</span>
                   <h5>Select Professional</h5>
                 </div>
-                
+
                 <Form.Group className="mb-4">
                   <div className="doctor-grid">
                     {doctors.map((doc) => (
-                      <div 
-                        key={doc.id} 
+                      <div
+                        key={doc.id}
                         className={`doctor-option ${formData.doctorId === doc.user.id ? 'active' : ''}`}
-                        onClick={() => setFormData({...formData, doctorId: doc.user.id})}
+                        onClick={() => setFormData({ ...formData, doctorId: doc.user.id })}
                       >
                         <div className="d-flex align-items-center">
                           <div className="doc-avatar">
-                             {doc.user.name.charAt(0)}
+                            {doc.user.name.charAt(0)}
                           </div>
                           <div className="ms-3">
                             <p className="doc-name mb-0">Dr. {doc.user.name}</p>
@@ -106,13 +110,14 @@ const BookAppointment = () => {
                       className="custom-input"
                       value={formData.dateTime}
                       onChange={handleChange}
+                      min={minDateTime} 
                       required
                     />
                   </div>
                 </Form.Group>
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={loading}
                   className="w-100 btn-book-now"
                 >

@@ -146,3 +146,54 @@
     background: #e2e8f0;
     border-radius: 10px;
 }
+
+/* Custom Styling for DateTime Input */
+.custom-input {
+  border: 2px solid #eef2ff;
+  border-radius: 12px;
+  padding: 12px 12px 12px 45px; /* Space for the Lucide icon */
+  font-weight: 500;
+  color: #1e1e2f;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  outline: none;
+}
+
+/* Styling the native picker appearance */
+.custom-input::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  color: #6366f1;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Hover effect for the whole input area */
+.input-with-icon:hover .custom-input {
+  border-color: #6366f1;
+  background-color: #fcfdff;
+}
