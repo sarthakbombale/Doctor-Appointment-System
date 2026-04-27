@@ -51,6 +51,27 @@ async function statusUpdateByDoctor(req, res) {
   const doctorUserId = Number(req.user.id);
 
   try {
+    const appointment = await Appointment.findOne({
+      where: { 
+        id: Number(id), 
+        doctorId: doctorUserId 
+      }
+    });
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        msg: "Update failed: Appointment not found or unauthorized."
+      });
+    }
+
+    if (appointment.status === 'Accepted') {
+      return res.status(400).json({
+        success: false,
+        msg: "This appointment has already been accepted. Cannot update again."
+      });
+    }
+
     const [rowsUpdated] = await Appointment.update(
       { status, updatedBy: doctorUserId },
       { 

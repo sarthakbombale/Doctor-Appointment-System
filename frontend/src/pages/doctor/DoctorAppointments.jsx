@@ -136,18 +136,7 @@ const DocMyAppointments = () => {
                           </>
                         )}
 
-                        {appt.status === "Accepted" && (
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            className="action-btn"
-                            onClick={() => updateStatus(appt.id, "Completed")}
-                          >
-                            <CheckCircle size={14} className="me-1" /> Mark Done
-                          </Button>
-                        )}
-
-                        {(appt.status === "Completed" || appt.status === "Rejected") && (
+                        {(appt.status === "Accepted" || appt.status === "Completed" || appt.status === "Rejected") && (
                           <span className="text-muted x-small italic">No actions</span>
                         )}
                       </div>
