@@ -56,7 +56,7 @@ const Login = () => {
               <div className="brand-icon-circle">
                 <Stethoscope size={48} color="#fff" />
               </div>
-              <h1>DocPoint</h1>
+              <h1>MedConnect</h1>
               <p>Connecting patients with the best healthcare professionals seamlessly.</p>
             </div>
           </div>
