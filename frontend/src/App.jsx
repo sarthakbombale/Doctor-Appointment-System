@@ -19,6 +19,7 @@ import AllUsers from "./pages/admin/AllUsers.jsx";
 import AllDoctors from "./pages/admin/AllDoctors.jsx";
 import DoctorApplications from "./pages/admin/DoctorApplications.jsx";
 import AllAppointments from "./pages/admin/AllAppointments.jsx";
+import LandingPage from "./components/landing/LandingPage";
 
 /* Doctor */
 import DoctorDashboard from "./pages/doctor/DoctorDashboard.jsx";
@@ -35,6 +36,7 @@ const App = () => {
   return (
     <Routes>
       {/* Public */}
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
