@@ -35,19 +35,16 @@ const Register = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
       toast.error("Only image files are allowed");
       return;
     }
-
     if (file.size > 2 * 1024 * 1024) {
       toast.error("Image size must be less than 2MB");
       return;
     }
-
     setImage(file);
   };
 
@@ -58,7 +55,6 @@ const Register = () => {
       toast.error("Password must be at least 6 characters");
       return;
     }
-
     if (!formData.gender) {
       toast.error("Please select gender");
       return;
@@ -86,104 +82,112 @@ const Register = () => {
 
   return (
     <Container fluid className="register-container">
-      {/* <Row className="justify-content-center">
-    <Col md={6} lg={5}> */}
       <Card className="register-card">
-        <h3 className="text-center mb-4">Create Account</h3>
+        <h3 className="register-title">Create Account</h3>
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3 input-group-custom">
-            <FaUser />
-            <Form.Control
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+          <Row className="g-3">
+            {/* Left Column Fields */}
+            <Col md={6}>
+              <Form.Group className="mb-2 input-group-custom">
+                <FaUser />
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3 input-group-custom">
-            <FaEnvelope />
-            <Form.Control
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+              <Form.Group className="mb-2 input-group-custom">
+                <FaEnvelope />
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3 input-group-custom">
-            <FaLock />
-            <Form.Control
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+              <Form.Group className="mb-2 input-group-custom">
+                <FaLock />
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
 
-          <Form.Group className="mb-3 input-group-custom">
-            <FaPhone />
-            <Form.Control
-              type="text"
-              name="contactNumber"
-              placeholder="Contact Number"
-              value={formData.contactNumber}
-              onChange={handleChange}
-            />
-          </Form.Group>
+            {/* Right Column Fields */}
+            <Col md={6}>
+              <Form.Group className="mb-2 input-group-custom">
+                <FaPhone />
+                <Form.Control
+                  type="text"
+                  name="contactNumber"
+                  placeholder="Contact Number"
+                  value={formData.contactNumber}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3 input-group-custom">
-            <FaHome />
-            <Form.Control
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleChange}
-            />
-          </Form.Group>
+              <Form.Group className="mb-2 input-group-custom">
+                <FaHome />
+                <Form.Control
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  value={formData.address}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3 input-group-custom">
-            <FaVenusMars />
-            <Form.Select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </Form.Select>
-          </Form.Group>
+              <Form.Group className="mb-2 input-group-custom">
+                <FaVenusMars />
+                <Form.Select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
+                  <option value="" disabled hidden>Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
 
-          <Form.Group className="mb-3 file-input-custom">
-            <FaImage />
-            <Form.Control
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </Form.Group>
+            {/* Full Width Bottom Elements */}
+            <Col xs={12}>
+              <Form.Group className="mb-3 file-input-custom">
+                <FaImage />
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+              </Form.Group>
 
-          <Button type="submit" className="register-btn" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
-          </Button>
+              <Button type="submit" className="register-btn" disabled={loading}>
+                {loading ? "Registering..." : "Register"}
+              </Button>
 
-          <p className="text-center mt-3">
-            Already have an account? <Link to="/">Login</Link>
-          </p>
+              <p className="login-redirect-text">
+                Already have an account? <Link to="/">Login</Link>
+              </p>
+            </Col>
+          </Row>
         </Form>
       </Card>
-      {/* </Col>
-      </Row> */}
     </Container>
   );
 };

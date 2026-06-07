@@ -18,6 +18,7 @@ const LandingPage = () => {
         else if (decoded.role === "Doctor") navigate("/doctor/dashboard");
         else if (decoded.role === "User") navigate("/user/dashboard");
       } catch (err) {
+        console.error("Token decoding failed:", err);
         localStorage.removeItem("token6163");
       }
     }
