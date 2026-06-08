@@ -4,7 +4,7 @@ import { Form, Button, Card, Container, InputGroup } from "react-bootstrap";
 import { loginUser } from "../../api/authApi.js";
 import { useNavigate, Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { Stethoscope, Mail, Lock } from "lucide-react"; // Modern medical icons
+import { Stethoscope, Mail, Lock } from "lucide-react";
 import "../../styles/Login.css";
 
 const Login = () => {
@@ -25,7 +25,6 @@ const Login = () => {
         const token = res.data.token;
         localStorage.setItem("token6163", token);
         const decoded = jwtDecode(token);
-
         toast.success("Welcome back!");
 
         const userRole = decoded.role?.toLowerCase();
@@ -35,45 +34,40 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(
-        error.response?.data?.msg ||
-          error.response?.data?.message ||
-          error.message ||
-          "Login failed"
-      );
+      toast.error(error.response?.data?.msg || error.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-page-wrapper">
-      <Container>
-        <div className="login-flex-container">
-          {/* Left Side: Branding/Visual */}
-          <div className="login-brand-section d-none d-md-flex">
-            <div className="brand-content">
-              <div className="brand-icon-circle">
-                <Stethoscope size={48} color="#fff" />
+    <div className="saas-page-wrapper">
+      <Container className="d-flex justify-content-center align-items-center">
+        <div className="saas-flex-container">
+          {/* Left Branding Panel */}
+          <div className="saas-brand-side d-none d-md-flex">
+            <div className="brand-content-wrapper">
+              <div className="brand-icon-shield">
+                <Stethoscope size={40} strokeWidth={2.5} />
               </div>
-              <h1>MedConnect</h1>
-              <p>Connecting patients with the best healthcare professionals seamlessly.</p>
+              <h2>MedConnect</h2>
+              <p>Connecting patients with premium healthcare networks seamlessly.</p>
             </div>
           </div>
 
-          {/* Right Side: Form */}
-          <Card className="login-auth-card">
-            <Card.Body>
-              <div className="form-header">
+          {/* Right Interactive Card */}
+          <Card className="saas-auth-card">
+            <Card.Body className="d-flex flex-column justify-content-center">
+              <div className="saas-card-header">
                 <h3>Welcome Back</h3>
-                <p className="text-muted">Please enter your details to login</p>
+                <p>Provide your credentials to access your dashboard</p>
               </div>
 
               <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-4">
-                  <Form.Label>Email Address</Form.Label>
-                  <InputGroup className="custom-input-group">
-                    <InputGroup.Text><Mail size={18} /></InputGroup.Text>
+                <Form.Group className="mb-3">
+                  <Form.Label className="saas-form-label">Email Address</Form.Label>
+                  <InputGroup className="saas-input-group">
+                    <InputGroup.Text><Mail size={16} /></InputGroup.Text>
                     <Form.Control
                       type="email"
                       name="email"
@@ -86,11 +80,9 @@ const Login = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-4">
-                  <div className="d-flex justify-content-between">
-                    <Form.Label>Password</Form.Label>
-                  </div>
-                  <InputGroup className="custom-input-group">
-                    <InputGroup.Text><Lock size={18} /></InputGroup.Text>
+                  <Form.Label className="saas-form-label">Password</Form.Label>
+                  <InputGroup className="saas-input-group">
+                    <InputGroup.Text><Lock size={16} /></InputGroup.Text>
                     <Form.Control
                       type="password"
                       name="password"
@@ -102,17 +94,13 @@ const Login = () => {
                   </InputGroup>
                 </Form.Group>
 
-                <Button 
-                  type="submit" 
-                  className="btn-medical-primary w-100 mb-3"
-                  disabled={loading}
-                >
+                <Button type="submit" className="saas-primary-btn w-100 mb-3" disabled={loading}>
                   {loading ? "Authenticating..." : "Login to Dashboard"}
                 </Button>
 
-                <div className="login-footer">
+                <div className="saas-card-footer">
                   <span>New to the platform?</span> 
-                  <Link to="/register" className="ms-2">Create an Account</Link>
+                  <Link to="/register" className="ms-1">Create an Account</Link>
                 </div>
               </Form>
             </Card.Body>

@@ -54,8 +54,8 @@ const BookAppointment = () => {
   const minDateTime = today.toISOString().slice(0, 16);
 
   return (
-    <Container className="py-5">
-      <div className="booking-header mb-5">
+    <Container className="py-0">
+      <div className="booking-header mb-1">
         <h2><Activity className="me-2 text-primary" /> Schedule an Appointment</h2>
         <p className="text-muted">Find your specialist and choose a convenient time slot.</p>
       </div>

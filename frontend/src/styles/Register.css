@@ -1,138 +1,48 @@
-/* FULL PAGE HEIGHT BLOCKER (CRITICAL FOR NO-SCROLL) */
-.register-container {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #1e3c72, #2a5298); /* Premium Dark Medical Blue Gradient */
-  padding: 15px;
-  overflow: hidden; /* Hard locks any background scrolling entirely */
+.register-override {
+  background: linear-gradient(135deg, #f0fdfa 0%, #e2e8f0 100%);
 }
 
-/* HIGH LEVEL SAS-PASSED CARD CONTAINER */
-.register-card {
+.saas-register-card-box {
   width: 100%;
-  max-width: 650px; /* Expanded wide to gracefully hold side-by-side grids */
-  padding: 24px 30px;
-  border-radius: 16px;
-  border: none;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  animation: fadeIn 0.4s ease-out;
+  max-width: 680px;
+  padding: 24px 20px;
+  border-radius: 16px !important;
+  border: 1px solid #ffffff !important;
+  background: #ffffff !important;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+  animation: saasFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.register-title {
-  text-align: center;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: #1e3c72;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
+/* Grid input spacing alignment updates */
+.saas-register-card-box .saas-form-label {
+  margin-bottom: 4px;
 }
 
-/* CUSTOM GRACEFUL COMPACT FIELDS */
-.input-group-custom,
-.file-input-custom {
-  position: relative;
+.saas-register-card-box .saas-input-group {
+  background: #f8fafc;
 }
 
-.input-group-custom svg,
-.file-input-custom svg {
-  position: absolute;
-  top: 50%;
-  left: 14px;
-  transform: translateY(-50%);
-  color: #6c757d;
-  font-size: 14px;
-  pointer-events: none;
-  transition: color 0.2s ease;
+.saas-register-card-box .saas-input-group .input-group-text {
+  background: transparent;
+  color: #94a3b8;
 }
 
-.input-group-custom input,
-.input-group-custom select,
-.file-input-custom input {
-  width: 100%;
-  padding-left: 42px;
-  height: 42px; /* Decreased field footprint slightly to compress heights */
-  border-radius: 8px;
-  border: 1px solid #ced4da;
-  font-size: 14px;
-  transition: all 0.2s ease-in-out;
+/* Interactive File Input Layout */
+.saas-register-card-box input[type="file"] {
+  padding-top: 8px;
+  color: #64748b;
+  font-size: 0.88rem;
+  cursor: pointer;
 }
 
-.input-group-custom input:focus,
-.input-group-custom select:focus,
-.file-input-custom input:focus {
-  border-color: #1e3c72;
-  box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.15);
+@keyframes saasFadeIn {
+  from { opacity: 0; transform: scale(0.98) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* PREMIUM INTERACTIVE ACTION BUTTON */
-.register-btn {
-  width: 100%;
-  height: 44px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  border: none;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  transition: transform 0.1s ease, box-shadow 0.2s ease;
-}
-
-.register-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1a3566, #234682);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(30, 60, 114, 0.25);
-}
-
-.register-btn:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.register-btn:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-/* REDIRECT LINKS */
-.login-redirect-text {
-  text-align: center;
-  margin-top: 14px;
-  margin-bottom: 0;
-  font-size: 13.5px;
-  color: #495057;
-}
-
-.login-redirect-text a {
-  color: #1e3c72;
-  font-weight: 600;
-  text-decoration: none;
-  margin-left: 4px;
-}
-
-.login-redirect-text a:hover {
-  text-decoration: underline;
-}
-
-/* ANIMATION ELEMENT */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* RESPONSIVE CONTROL FOR SMALL MOBILE INTERFACES */
 @media (max-width: 767px) {
-  .register-container {
-    overflow-y: auto; /* Fallback: safely allows mobile scrolling only on small screens if vertical space is scarce */
-  }
-  .register-card {
-    padding: 20px;
-    margin: auto 0;
-  }
-  .register-title {
-    margin-bottom: 16px;
+  .saas-register-card-box {
+    padding: 15px;
+    margin: 12px 0;
   }
 }
