@@ -1,75 +1,96 @@
-/* ===== SIDEBAR LAYOUT ===== */
-.sidebar {
-  width: 240px;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #1e1e2f, #151524);
-  color: #fff;
-  transition: width 0.3s ease;
-  flex-shrink: 0; /* VERY IMPORTANT */
-}
-
-.sidebar.collapsed {
-  width: 70px;
-}
-
-/* ===== HEADER ===== */
 .sidebar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .logo {
   margin: 0;
-  font-size: 18px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #f8fbff;
 }
 
 .toggle-icon {
-  font-size: 20px;
+  font-size: 1.2rem;
+  color: #dbeafe;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-/* ===== NAV ===== */
-.sidebar-nav a {
+.toggle-icon:hover {
+  transform: scale(1.08);
+}
+
+.sidebar-nav {
+  padding: 18px 12px;
+  gap: 8px;
+}
+
+.sidebar-nav a,
+.sidebar-logout {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 10px 14px;
-  color: #fff;
+  width: 100%;
+  padding: 12px 14px;
+  color: #e2e8f0;
   text-decoration: none;
-  border-radius: 6px;
-  margin: 4px 8px;
-  transition: background 0.2s ease;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-.sidebar-nav a svg {
-  font-size: 18px;
+.sidebar-nav a svg,
+.sidebar-logout svg {
+  font-size: 1.05rem;
+  min-width: 18px;
 }
 
-.sidebar-nav a:hover {
-  background: rgba(255, 255, 255, 0.1);
+.sidebar-nav a:hover,
+.sidebar-logout:hover {
+  background: rgba(148, 163, 184, 0.12);
+  color: #ffffff;
+  transform: translateX(2px);
 }
 
 .sidebar-nav a.active {
-  background: #343454;
+  background: linear-gradient(90deg, rgba(15, 118, 110, 0.8), rgba(13, 148, 136, 0.55));
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 118, 110, 0.18);
 }
 
-/* ===== LOGOUT ===== */
 .sidebar-logout {
-  background: none;
-  border: none;
-  color: #fff;
-  padding: 10px 14px;
-  margin: 12px 8px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  text-align: left;
+  margin-top: 8px;
   cursor: pointer;
-  border-radius: 6px;
 }
 
 .sidebar-logout:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: red;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fecaca;
 }
+
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+  padding-inline: 10px;
+}
+
+.sidebar.collapsed .sidebar-nav a,
+.sidebar.collapsed .sidebar-logout {
+  justify-content: center;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.sidebar.collapsed .logo,
+.sidebar.collapsed .sidebar-nav span,
+.sidebar.collapsed .sidebar-logout span {
+  display: none;
+}
+

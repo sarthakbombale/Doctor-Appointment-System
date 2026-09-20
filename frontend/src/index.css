@@ -1,0 +1,61 @@
+:root {
+  --bg-primary: #f4f8fb;
+  --bg-panel: #ffffff;
+  --bg-soft: #eef7f6;
+  --primary: #0f766e;
+  --primary-strong: #0a5c57;
+  --secondary: #1d4ed8;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: rgba(148, 163, 184, 0.22);
+  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --shadow-card: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(29, 78, 216, 0.08), transparent 30%),
+    var(--bg-primary);
+  color: var(--text);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.card,
+.navbar,
+.list-group,
+.table,
+.form-control,
+.form-select {
+  border-radius: 16px !important;
+}
+
+::selection {
+  background: rgba(15, 118, 110, 0.18);
+}
