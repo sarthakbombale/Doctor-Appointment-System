@@ -1,0 +1,62 @@
+/* Badge Pill Utility */
+.badge-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  background-color: #eff6ff;
+  color: #2563eb;
+  border-radius: 50px;
+  border: 1px solid #dbeafe;
+}
+
+/* Custom Workflow Switch Tabs */
+.workflow-tabs {
+  border: 1px solid #e2e8f0;
+}
+
+.workflow-tabs .btn {
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Step Counters */
+.step-num {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.bg-indigo {
+  background-color: #4f46e5 !important;
+}
+
+.text-indigo {
+  color: #4f46e5 !important;
+}
+
+.step-item h5 {
+  margin-bottom: 4px;
+  font-size: 1.05rem;
+}
+
+/* Visual layout improvements for tracking lines */
+.workflow-steps {
+  position: relative;
+  padding-left: 10px;
+}
+
+/* Image styling additions */
+.workflow-content img {
+  max-height: 380px;
+  object-fit: cover;
+  width: 100%;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}

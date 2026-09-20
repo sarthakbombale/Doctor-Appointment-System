@@ -38,7 +38,7 @@ const Sidebar = () => {
     <aside className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
       {/* HEADER */}
       <div className="sidebar-header">
-        {!isCollapsed && <h5 className="logo">Doctor App</h5>}
+        {!isCollapsed && <h5 className="logo">MedConnect</h5>}
         <FaBars
           className="toggle-icon"
           onClick={() => setIsCollapsed(!isCollapsed)}

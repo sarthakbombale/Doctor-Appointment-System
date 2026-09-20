@@ -1,141 +1,182 @@
-/* Color Palette: Teal & Soft Blue */
-:root {
-  --medical-teal: #0d9488;
-  --medical-dark: #134e4a;
-  --medical-light: #f0fdfa;
-  --soft-gray: #f8fafc;
-}
-
-.login-page-wrapper {
+.saas-page-wrapper {
   min-height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
-  background-color: var(--soft-gray);
-  font-family: 'Inter', -apple-system, sans-serif;
+  background: linear-gradient(135deg, #f0fdfa 0%, #e2e8f0 100%);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
-.login-flex-container {
+.saas-flex-container {
   display: flex;
-  max-width: 900px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 20px;
+  width: 100%;
+  max-width: 920px;
+  min-height: 520px;
+  background: #ffffff;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+  border: 1px solid #ffffff;
 }
 
-/* Left Brand Section */
-.login-brand-section {
+/* Brand Section Architecture */
+.saas-brand-side {
   flex: 1;
-  background: linear-gradient(135deg, var(--medical-teal), var(--medical-dark));
+  background: linear-gradient(135deg, #0d9488 0%, #115e59 100%);
   padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: #ffffff;
   text-align: center;
+  position: relative;
 }
 
-.brand-icon-circle {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 20px;
-  border-radius: 50%;
-  margin-bottom: 20px;
-  backdrop-filter: blur(5px);
+.saas-brand-side::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 70%);
 }
 
-.brand-content h1 {
-  font-weight: 800;
-  letter-spacing: -1px;
+.brand-icon-shield {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+  display: inline-flex;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.brand-content p {
-  opacity: 0.9;
-  font-size: 0.95rem;
-  max-width: 250px;
+.brand-content-wrapper h2 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
 }
 
-/* Right Auth Section */
-.login-auth-card {
+.brand-content-wrapper p {
+  opacity: 0.85;
+  font-size: 0.92rem;
+  max-width: 260px;
+  line-height: 1.5;
+  margin: 0 auto;
+}
+
+/* Auth Card Panel */
+.saas-auth-card {
   flex: 1.2;
   border: none !important;
-  padding: 40px 30px;
+  padding: 40px 35px;
+  background: transparent !important;
 }
 
-.form-header {
-  margin-bottom: 30px;
+.saas-card-header {
+  margin-bottom: 28px;
 }
 
-.form-header h3 {
+.saas-card-header h3 {
   font-weight: 700;
-  color: #1e293b;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
 }
 
-/* Styled Inputs */
-.custom-input-group {
+.saas-card-header p {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Unified SaaS Inputs */
+.saas-form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.saas-input-group {
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid #e2e8f0;
-  transition: 0.3s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
 }
 
-.custom-input-group:focus-within {
-  border-color: var(--medical-teal);
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+.saas-input-group:focus-within {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
 }
 
-.custom-input-group .input-group-text {
-  background-color: #fff;
+.saas-input-group .input-group-text {
+  background-color: #ffffff;
   border: none;
-  color: #94a3b8;
-  padding-right: 5px;
+  color: #64748b;
+  padding-right: 0;
+  padding-left: 14px;
 }
 
-.custom-input-group input {
+.saas-input-group .form-control,
+.saas-input-group .form-select {
   border: none !important;
-  padding: 12px 10px;
-  font-size: 0.95rem;
+  padding: 10px 12px;
+  font-size: 0.92rem;
+  color: #0f172a;
 }
 
-.custom-input-group input:focus {
+.saas-input-group .form-control:focus,
+.saas-input-group .form-select:focus {
   box-shadow: none !important;
 }
 
-/* Buttons */
-.btn-medical-primary {
-  background-color: var(--medical-teal);
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
+/* Action Buttons */
+.saas-primary-btn {
+  background: #0d9488 !important;
+  border: none !important;
+  padding: 11px;
+  border-radius: 10px !important;
   font-weight: 600;
-  transition: all 0.3s;
+  font-size: 0.95rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.btn-medical-primary:hover {
-  background-color: var(--medical-dark);
-  transform: translateY(-2px);
+.saas-primary-btn:hover:not(:disabled) {
+  background: #115e59 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
 }
 
-/* Footer Link */
-.login-footer {
+.saas-primary-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Redirects Footer */
+.saas-card-footer {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-top: 10px;
 }
 
-.login-footer a {
-  color: var(--medical-teal);
+.saas-card-footer a {
+  color: #0d9488;
   font-weight: 600;
   text-decoration: none;
 }
 
-/* Mobile Responsive */
+.saas-card-footer a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
-  .login-flex-container {
-    margin: 10px;
-    border-radius: 15px;
+  .saas-flex-container {
+    margin: 16px;
+    min-height: auto;
   }
-  .login-auth-card {
+  .saas-auth-card {
     padding: 30px 20px;
   }
 }
