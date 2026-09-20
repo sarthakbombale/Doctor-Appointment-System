@@ -1,57 +1,86 @@
 .admin-dashboard-wrapper {
-  background-color: #f1f5f9;
   min-height: 100vh;
+  padding-top: 10px;
+}
+
+.dashboard-header {
+  padding: 20px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+}
+
+.dashboard-header h3 {
+  letter-spacing: -0.05em;
+  color: var(--text);
+}
+
+.dashboard-header p {
+  margin-bottom: 0;
+  color: var(--muted);
 }
 
 .admin-stat-card {
-  border-radius: 16px;
+  border-radius: 20px !important;
+  border: 1px solid rgba(148, 163, 184, 0.1) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-card);
 }
 
 .admin-stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 18px 28px rgba(15, 23, 42, 0.08) !important;
 }
 
-/* Icon Box Styles */
 .icon-box {
-  width: 50px;
-  height: 50px;
+  width: 54px;
+  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
-.stat-users { background-color: #e0f2fe; color: #0369a1; }
-.stat-doctors { background-color: #dcfce7; color: #15803d; }
-.stat-appointments { background-color: #fef3c7; color: #b45309; }
+.stat-users { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1d4ed8; }
+.stat-doctors { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #15803d; }
+.stat-appointments { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #b45309; }
 
-/* Labels */
 .trend-label {
-  padding: 4px 10px;
-  background-color: #f8fafc;
-  border-radius: 20px;
-  color: #64748b;
-  font-weight: 500;
+  padding: 6px 10px;
+  background: #f8fafc;
+  border-radius: 999px;
+  color: #475569;
+  font-weight: 600;
+  border: 1px solid rgba(148, 163, 184, 0.15);
 }
 
 .placeholder-chart {
-  background-color: #f8fafc;
-  border: 2px dashed #cbd5e1;
-  border-radius: 12px;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef6ff 100%);
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  min-height: 220px;
 }
 
 .admin-notice-card {
-  background: linear-gradient(135deg, #1e293b, #0f172a) !important;
+  background: linear-gradient(145deg, #111827 0%, #0f172a 100%) !important;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
 }
 
-/* Typography */
 .admin-stat-card h2 {
   color: #0f172a;
   letter-spacing: -1px;
 }
 
 @media (max-width: 768px) {
-  .admin-dashboard-wrapper { padding: 15px; }
+  .admin-dashboard-wrapper {
+    padding: 8px 0 16px;
+  }
+
+  .dashboard-header {
+    padding: 18px 14px;
+  }
 }
