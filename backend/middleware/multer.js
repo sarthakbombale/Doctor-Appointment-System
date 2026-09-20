@@ -4,14 +4,28 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const cloudName = process.env.CLOUDINARY_NAME;
-const apiKey = process.env.CLOUDINARY_API_KEY;
-const apiSecret = process.env.CLOUDINARY_API_SECRET;
+const cloudName = (process.env.CLOUDINARY_NAME || "").trim();
+const apiKey = (process.env.CLOUDINARY_API_KEY || "").trim();
+const apiSecret = (process.env.CLOUDINARY_API_SECRET || "").trim();
 
 const isValidCloudinaryConfig = () => {
   if (!cloudName || !apiKey || !apiSecret) return false;
-  const normalizedName = cloudName.trim().toLowerCase();
-  if (normalizedName.includes("cloudinary_") || normalizedName === "cloudinary") return false;
+
+  const normalizedName = cloudName.toLowerCase();
+  const placeholderValues = [
+    "cloudinary",
+    "cloudinary_",
+    "your_cloud_name",
+    "your-cloud-name",
+    "your_cloudinary_name",
+    "cloudinary_doc-img",
+    "replace_with_your_cloud_name",
+  ];
+
+  if (placeholderValues.includes(normalizedName)) return false;
+  if (normalizedName.includes("cloudinary_")) return false;
+  if (!/^[a-z0-9][a-z0-9-]*$/i.test(cloudName)) return false;
+
   return true;
 };
 
